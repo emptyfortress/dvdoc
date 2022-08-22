@@ -1,5 +1,5 @@
 <template lang="pug">
-q-drawer(:model-value="show" side="left" :width="256" bordered )
+q-drawer(:model-value="show" side="left" :width="256" bordered).bg-grey-2
 	q-list
 		q-item(clickable v-ripple :to="page.url" v-for="page in pages" :key="page.id" )
 			q-item-section(avatar)
@@ -34,7 +34,6 @@ export default {
 <style scoped lang="scss">
 .q-item--active,
 .q-item.q-router-link--active {
-	background: var(--q-selection);
-	color: var(--q-primary-darken-2);
+	color: black;
 }
 </style>

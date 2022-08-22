@@ -19,7 +19,7 @@ export const router = createRouter({
 		{
 			path: '/',
 			component: Home,
-			meta: { transition: 'slide-left', title: 'Коды полномочий', requiresAuth: false },
+			meta: { transition: 'slide-left', title: 'Docsvision docs', requiresAuth: false },
 		},
 	],
 })
