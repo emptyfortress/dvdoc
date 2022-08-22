@@ -1,0 +1,95 @@
+// page transitions
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.5s ease;
+}
+.fade-leave-to,
+.fade-enter-from {
+	opacity: 0;
+}
+
+.slide-right-enter-active,
+.slide-right-leave-active {
+	transition: all 0.5s ease;
+	// position: absolute;
+}
+.slide-right-enter-from,
+.slide-right-leave-to {
+	transform: translateX(30px);
+	opacity: 0;
+}
+
+.slide-left-enter-active,
+.slide-left-leave-active {
+	transition: all 0.3s ease;
+}
+.slide-left-enter-from,
+.slide-left-leave-to {
+	position: absolute;
+	transform: translateX(-30px);
+	opacity: 0;
+}
+
+.slide-top-enter-active,
+.slide-top-leave-active {
+	transition: all 0.3s ease;
+}
+.slide-top-enter-from,
+.slide-top-leave-to {
+	position: absolute;
+	transform: translateY(-30px);
+	opacity: 0;
+}
+.slide-bottom-enter-active,
+.slide-bottom-leave-active {
+	transition: all 0.5s ease;
+	position: absolute;
+}
+.slide-bottom-enter-from,
+.slide-bottom-leave-to {
+	transform: translateY(30px);
+	opacity: 0;
+}
+// this is animation for total in grid **********************************
+.sliding-enter-active,
+.sliding-leave-active {
+	transition: all 0.3s ease-in-out;
+	position: absolute;
+}
+.sliding-enter-from, .sliding-leave-to {
+	opacity: 0;
+	transform: translateY(60px);
+	position: absolute;
+}
+
+.bottom-enter-active,
+.bottom-leave-active {
+	transition: all 0.3s;
+}
+.bottom-enter, .bottom-leave-to /* .list-leave-active below version 2.1.8 */ {
+	opacity: 0;
+	transform: translateY(100px);
+}
+// loading animation ******************************
+@keyframes borealisBar {
+	0% {
+		left: 0%;
+		right: 100%;
+		width: 0%;
+	}
+	10% {
+		left: 0%;
+		right: 75%;
+		width: 25%;
+	}
+	90% {
+		right: 0%;
+		left: 75%;
+		width: 55%;
+	}
+	100% {
+		left: 100%;
+		right: 0%;
+		width: 0%;
+	}
+}
