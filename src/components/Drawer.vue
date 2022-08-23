@@ -29,6 +29,12 @@ const pages = [
 		url: '/errors',
 		classname: 'tab',
 	},
+	{
+		id: 2,
+		title: 'Исправленные ошибки (tree)',
+		url: '/tree',
+		classname: 'tab',
+	},
 ]
 </script>
 

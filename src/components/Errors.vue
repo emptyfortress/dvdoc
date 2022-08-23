@@ -3,7 +3,7 @@
 	.left
 		.zg Исправленные ошибки
 		template(v-for="error in filtered" :key="error.version")
-			.version
+			.version(:id="error.version")
 				WordHighlighter(:query="filter") {{error.version}}
 			.smallgrid(v-for="item in error.fixed" :key="item.id" )
 				WordHighlighter(:query="filter") {{item.id}}
@@ -12,12 +12,19 @@
 		q-input(dense debounce="300" color="primary" v-model="filter" clearable @clear="filter = ''")
 			template(v-slot:prepend)
 				q-icon(name="mdi-magnify")
+		br
+		.sod Содержание
+		.list
+			div(v-for="item in errors" @click="handleScroll(item.version)" :key="item.version") {{item.version}}
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { errors } from '@/stores/data'
 import WordHighlighter from 'vue-word-highlighter'
+import { scroll } from 'quasar'
+
+const { getScrollTarget, setVerticalScrollPosition } = scroll
 
 const filter = ref('')
 
@@ -40,6 +47,14 @@ const filtered = computed(() => {
 	}
 	return errors
 })
+
+const handleScroll = (e: string) => {
+	const ele = document.getElementById(e) // You need to get your element here
+	const target = getScrollTarget(ele!)
+	const offset = ele!.offsetTop - 75
+	const duration = 300
+	setVerticalScrollPosition(target, offset, duration)
+}
 </script>
 
 <style scoped lang="scss">
@@ -47,9 +62,6 @@ const filtered = computed(() => {
 	font-size: 1.5rem;
 	border-bottom: 1px solid #ccc;
 	margin-top: 3rem;
-}
-.q-item {
-	font-size: 1.1rem;
 }
 .smallgrid {
 	margin-top: 1rem;

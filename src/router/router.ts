@@ -20,6 +20,12 @@ export const router = createRouter({
 			meta: { title: 'Docsvision docs', bread: ['Web-client'] },
 		},
 		{
+			path: '/tree',
+			name: 'tree',
+			component: () => import('@/components/Tree.vue'),
+			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Исправленные ошибки'] },
+		},
+		{
 			path: '/errors',
 			name: 'error',
 			component: () => import('@/components/Errors.vue'),
