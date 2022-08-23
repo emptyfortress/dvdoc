@@ -9,7 +9,7 @@
 				WordHighlighter(:query="filter") {{item.id}}
 				WordHighlighter(:query="filter") {{item.text}}
 	.side
-		q-input(dense debounce="300" color="primary" v-model="filter" clearable @clear="filter = ''")
+		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable @clear="filter = ''")
 			template(v-slot:prepend)
 				q-icon(name="mdi-magnify")
 		br
@@ -33,14 +33,17 @@ const filtered = computed(() => {
 		let temp = errors.filter((element) =>
 			element.fixed.some(
 				(subElement) =>
-					subElement.id.includes(filter.value) || subElement.text.includes(filter.value)
+					subElement.id.toLowerCase().includes(filter.value.toLowerCase()) ||
+					subElement.text.toLowerCase().includes(filter.value.toLowerCase())
 			)
 		)
 		return temp.map((item) => {
 			return {
 				...item,
 				fixed: item.fixed.filter(
-					(el) => el.id.includes(filter.value) || el.text.includes(filter.value)
+					(el) =>
+						el.id.toLowerCase().includes(filter.value.toLowerCase()) ||
+						el.text.toLowerCase().includes(filter.value.toLowerCase())
 				),
 			}
 		})
