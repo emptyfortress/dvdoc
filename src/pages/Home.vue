@@ -94,11 +94,4 @@ const handleScroll = (e: string) => {
 }
 </script>
 
-<style scoped lang="scss">
-.grid {
-	padding: 2rem;
-	display: grid;
-	grid-template-columns: 1fr 300px;
-	gap: 1rem;
-}
-</style>
+<style scoped lang="scss"></style>
