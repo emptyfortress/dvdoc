@@ -7,9 +7,9 @@
 				WordHighlighter(:query="filter") {{error.version}}
 			.smallgrid(v-for="item in error.fixed" :key="item.id" )
 				WordHighlighter(:query="filter") {{item.id}}
-				div {{item.text}}
+				WordHighlighter(:query="filter") {{item.text}}
 	.side
-		q-input(dense debounce="300" color="primary" v-model="filter" clearable)
+		q-input(dense debounce="300" color="primary" v-model="filter" clearable @clear="filter = ''")
 			template(v-slot:prepend)
 				q-icon(name="mdi-magnify")
 </template>
@@ -22,15 +22,23 @@ import WordHighlighter from 'vue-word-highlighter'
 const filter = ref('')
 
 const filtered = computed(() => {
-	let temp = errors.filter((element) =>
-		element.fixed.some((subElement) => subElement.id.includes(filter.value))
-	)
-	return temp.map((item) => {
-		return {
-			...item,
-			fixed: item.fixed.filter((el) => el.id.includes(filter.value)),
-		}
-	})
+	if (filter.value !== '') {
+		let temp = errors.filter((element) =>
+			element.fixed.some(
+				(subElement) =>
+					subElement.id.includes(filter.value) || subElement.text.includes(filter.value)
+			)
+		)
+		return temp.map((item) => {
+			return {
+				...item,
+				fixed: item.fixed.filter(
+					(el) => el.id.includes(filter.value) || el.text.includes(filter.value)
+				),
+			}
+		})
+	}
+	return errors
 })
 </script>
 
