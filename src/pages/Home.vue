@@ -1,5 +1,8 @@
 <template lang="pug">
-h2 fuck
+.pad
+	.left
+		div(v-for="n in 50") lakjdslkjal {{ n }}
+	.side
 </template>
 
 <script setup lang="ts">

@@ -4,11 +4,8 @@ import Home from '@/pages/Home.vue'
 
 declare module 'vue-router' {
 	interface RouteMeta {
-		// is optional
-		isAdmin?: boolean
-		// must be declared by every route
-		requiresAuth: boolean
 		title: string
+		bread: string[]
 	}
 }
 
@@ -18,8 +15,21 @@ export const router = createRouter({
 	routes: [
 		{
 			path: '/',
+			name: 'home',
 			component: Home,
-			meta: { transition: 'slide-left', title: 'Docsvision docs', requiresAuth: false },
+			meta: { title: 'Docsvision docs', bread: ['Web-client'] },
+		},
+		{
+			path: '/errors',
+			name: 'error',
+			component: () => import('@/components/Errors.vue'),
+			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Исправленные ошибки'] },
+		},
+		{
+			path: '/version',
+			name: 'version',
+			component: () => import('@/components/Version.vue'),
+			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Список изменений в версии'] },
 		},
 	],
 })

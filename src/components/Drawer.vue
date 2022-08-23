@@ -1,39 +1,46 @@
 <template lang="pug">
-q-drawer(:model-value="show" side="left" :width="256" bordered).bg-grey-2
+q-drawer(:model-value="show" show-if-above side="left" ).bg-grey-2
 	q-list
 		q-item(clickable v-ripple :to="page.url" v-for="page in pages" :key="page.id" )
-			q-item-section(avatar)
-				q-icon(:name="page.icon")
-			q-item-section {{ page.title }}
+			q-item-section(:class="page.classname") {{ page.title }}
 
 </template>
 
-<script>
-import SvgIcon from '@/components/SvgIcon.vue'
+<script setup lang="ts">
+const props = defineProps({
+	show: Boolean,
+})
 
-export default {
-	props: ['show'],
-	components: { SvgIcon },
-	setup() {
-		const pages = [
-			{
-				id: 0,
-				title: 'Коды полномочий',
-				icon: 'mdi-book-open-page-variant-outline',
-				url: '/',
-			},
-		]
-
-		return {
-			pages,
-		}
+const pages = [
+	{
+		id: 0,
+		title: 'Web-client',
+		url: '/',
 	},
-}
+	{
+		id: 1,
+		title: 'Список изменений в версиях',
+		url: '/version',
+		classname: 'tab',
+	},
+	{
+		id: 1,
+		title: 'Исправленные ошибки',
+		url: '/errors',
+		classname: 'tab',
+	},
+]
 </script>
 
 <style scoped lang="scss">
+.q-item {
+	font-size: 1rem;
+}
 .q-item--active,
 .q-item.q-router-link--active {
 	color: black;
+}
+.tab {
+	padding-left: 2rem;
 }
 </style>

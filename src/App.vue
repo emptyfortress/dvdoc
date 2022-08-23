@@ -2,20 +2,15 @@
 import { ref, computed } from 'vue'
 import Drawer from '@/components/Drawer.vue'
 import RDrawer from '@/components/RDrawer.vue'
+import { useRoute } from 'vue-router'
 
 const leftDrawer = ref(true)
 const rightDrawer = ref(true)
-
-// const toggleLeftDrawer = () => {
-// 	leftDrawer.value = !leftDrawer.value
-// }
-const toggleRightDrawer = () => {
-	rightDrawer.value = !rightDrawer.value
-}
+const route = useRoute()
 </script>
 
 <template lang="pug">
-q-layout(view="hHh lpR fFf")
+q-layout(view="hHh LpR fFf")
 	q-header.head
 		q-toolbar
 
@@ -28,14 +23,44 @@ q-layout(view="hHh lpR fFf")
 			.site Дополнительно
 
 	Drawer(:show="leftDrawer")
-	RDrawer(:show="rightDrawer")
+	//- RDrawer(:show="rightDrawer")
 
-	q-page-container
-		router-view
+	.subbar
+		q-btn(flat round dense icon="mdi-home-outline").q-mr-sm
+		q-breadcrumbs(active-color="black").bread
+			q-breadcrumbs-el(v-for="item in route.meta.bread" :key="item" :label="item")
+	q-page-container.rel
+		q-page.q-pt-xl
+			router-view(v-slot="{ Component }")
+				transition(name="fade" mode="out-in")
+					component(:is="Component")
 
 </template>
 
 <style scoped lang="scss">
+.q-page-container {
+	position: relative;
+}
+.subbar {
+	position: fixed;
+	top: 72px;
+	width: 100%;
+	height: 50px;
+	background: $grey-2;
+	border-bottom: 1px solid $grey-4;
+	line-height: 50px;
+	padding-left: 320px;
+	display: flex;
+	align-items: center;
+	font-size: 1rem;
+	z-index: 30;
+}
+.bread {
+	color: black;
+}
+.q-breadcrumbs__el:hover {
+	text-decoration: underline;
+}
 .head {
 	height: 72px;
 	line-height: 72px;
@@ -43,8 +68,9 @@ q-layout(view="hHh lpR fFf")
 	padding-left: 2rem;
 }
 .ico {
-	transform: translateY(10px);
+	transform: translateY(7px);
 	margin-right: 1rem;
+	width: 24px;
 }
 .inp {
 	height: 30px;

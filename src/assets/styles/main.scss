@@ -1,0 +1,20 @@
+@import './animation.scss';
+
+.pad {
+	padding: 2rem;
+}
+.zag {
+	font-size: 1.8rem;
+}
+
+.rel {
+	position: relative;
+}
+.side {
+	position: fixed;
+	top: 125px;
+	right: 10px;
+	height: 300px;
+	min-width: 300px;
+	background: pink;
+}
