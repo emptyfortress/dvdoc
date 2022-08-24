@@ -4,9 +4,9 @@
 		.zg Список изменений
 		template(v-for="(ver, index) in errors" :key="ver.id")
 			.version(:id="ver.version")
-				div
+				.row.items-center
 					q-icon(name="mdi-source-branch" color="accent").q-mr-md
-					span {{ver.version}}
+					.bad {{ver.version}}
 				.date(v-if="index !== 0") 23.07.2022
 			q-expansion-item(label="Функциональные изменения" header-class="hd" icon="mdi-briefcase-outline" expand-separator v-if="index !== 0")
 				q-card-section

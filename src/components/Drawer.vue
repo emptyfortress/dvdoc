@@ -7,7 +7,7 @@ q-drawer(:model-value="show" show-if-above side="left" ).bg-grey-2
 	br
 	q-separator
 	q-item(clickable to="/tree")
-		q-item-section Версии
+		q-item-section.tab Дерево
 
 </template>
 

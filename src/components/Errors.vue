@@ -2,9 +2,17 @@
 .grid
 	.left
 		.zg Исправленные ошибки
-		template(v-for="error in filtered" :key="error.version")
+		template(v-if="filtered.length == 0")
+			p
+				q-icon(name="mdi-emoticon-sad-outline").q-mr-md
+				|Ничего не найдено.
+		template(v-else v-for="(error, index) in filtered" :key="error.version")
 			.version(:id="error.version")
-				component(:is="WordHighlighter" :query="filter") {{error.version}}
+				.row.items-center
+					q-icon(name="mdi-source-branch" color="accent").q-mr-md
+					.bad {{error.version}}
+					//- component(:is="WordHighlighter" :query="filter")
+				.date(v-if="index !== 0") 23.07.2022
 			.smallgrid(v-for="item in error.fixed" :key="item.id" )
 				component(:is="WordHighlighter" :query="filter") {{item.id}}
 				component(:is="WordHighlighter" :query="filter") {{item.text}}
