@@ -3,9 +3,6 @@ q-drawer(:model-value="show" show-if-above side="left" ).bg-grey-2
 	q-list
 		q-item(clickable v-ripple :to="page.url" v-for="page in pages" :key="page.id")
 			q-item-section(:class="page.classname") {{ page.title }}
-	br
-	br
-	q-separator
 	q-item(clickable to="/tree")
 		q-item-section.tab Дерево
 
