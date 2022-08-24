@@ -23,19 +23,19 @@ export const router = createRouter({
 			path: '/tree',
 			name: 'tree',
 			component: () => import('@/components/Tree.vue'),
-			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Исправленные ошибки'] },
+			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Дерево'] },
 		},
 		{
 			path: '/errors',
 			name: 'error',
 			component: () => import('@/components/Errors.vue'),
-			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Исправленные ошибки'] },
+			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Ошибки solo'] },
 		},
 		{
 			path: '/version',
 			name: 'version',
 			component: () => import('@/components/Version.vue'),
-			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Список изменений в версии'] },
+			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Список версий'] },
 		},
 	],
 })

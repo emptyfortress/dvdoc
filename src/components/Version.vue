@@ -1,12 +1,14 @@
 <template lang="pug">
 .grid
 	.left
-		.zg Список изменений
+		.zg Список версий
 		template(v-for="(ver, index) in errors" :key="ver.id")
 			.version(:id="ver.version")
 				.row.items-center
-					q-icon(name="mdi-source-branch" color="accent").q-mr-md
-					.bad {{ver.version}}
+					q-btn( dense unelevated icon="mdi-source-branch" color="accent").q-mr-md
+					div {{ver.version}}
+					//- q-icon(name="mdi-source-branch" color="accent").q-mr-md
+					//- .bad {{ver.version}}
 				.date(v-if="index !== 0") 23.07.2022
 			q-expansion-item(label="Функциональные изменения" header-class="hd" icon="mdi-briefcase-outline" expand-separator v-if="index !== 0")
 				q-card-section
@@ -78,5 +80,8 @@ const handleScroll = (e: string) => {
 .feat {
 	font-weight: 500;
 	font-style: italic;
+}
+.version {
+	// margin-left: 12px;
 }
 </style>

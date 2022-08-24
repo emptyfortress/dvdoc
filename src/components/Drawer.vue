@@ -24,13 +24,13 @@ const pages = [
 	},
 	{
 		id: 1,
-		title: 'Исправленные ошибки',
+		title: 'Ошибки solo',
 		url: '/errors',
 		classname: 'tab',
 	},
 	{
 		id: 1,
-		title: 'Список изменений',
+		title: 'Список версий',
 		url: '/version',
 		classname: 'tab',
 	},

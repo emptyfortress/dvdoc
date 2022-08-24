@@ -1,7 +1,7 @@
 <template lang="pug">
 .grid
 	.left
-		.zg Исправленные ошибки
+		.zg Ошибки solo
 		template(v-if="filtered.length == 0")
 			p
 				q-icon(name="mdi-emoticon-sad-outline").q-mr-md
@@ -9,9 +9,8 @@
 		template(v-else v-for="(error, index) in filtered" :key="error.version")
 			.version(:id="error.version")
 				.row.items-center
-					q-icon(name="mdi-source-branch" color="accent").q-mr-md
-					.bad {{error.version}}
-					//- component(:is="WordHighlighter" :query="filter")
+					q-btn( dense unelevated icon="mdi-source-branch" color="accent").q-mr-md
+					component(:is="WordHighlighter" :query="filter") {{error.version}}
 				.date(v-if="index !== 0") 23.07.2022
 			.smallgrid(v-for="item in error.fixed" :key="item.id" )
 				component(:is="WordHighlighter" :query="filter") {{item.id}}
