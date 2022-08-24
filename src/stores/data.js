@@ -1,9 +1,11 @@
 const errors = [
 	{
+		id: '0',
 		version: 'Войдет в следующую версию',
 		fixed: [{ id: 'ERR-2514', text: 'Ошибка при обновлении ВК' }],
 	},
 	{
+		id: '1',
 		version: '5.5.5957.274',
 		fixed: [
 			{
@@ -39,6 +41,7 @@ const errors = [
 		],
 	},
 	{
+		id: '2',
 		version: '5.5.5957.250',
 		fixed: [
 			{ id: 'ERR-2174', text: 'Календарь по умолчанию не учитывается при расчёте сроков.' },
@@ -91,6 +94,7 @@ const errors = [
 		],
 	},
 	{
+		id: '3',
 		version: '5.5.5957.226',
 		fixed: [
 			{
@@ -135,6 +139,7 @@ const errors = [
 		],
 	},
 	{
+		id: '4',
 		version: '5.5.5957.195',
 		fixed: [
 			{
@@ -185,6 +190,7 @@ const errors = [
 		],
 	},
 	{
+		id: '5',
 		version: '5.5.5957.174',
 		fixed: [
 			{ id: 'ERR-1356', text: 'TextArea HtmlEditor автоматический Scroll.' },
@@ -235,6 +241,7 @@ const errors = [
 		],
 	},
 	{
+		id: '6',
 		version: '5.5.5957.141',
 		fixed: [
 			{
@@ -282,6 +289,7 @@ const errors = [
 		],
 	},
 	{
+		id: '7',
 		version: '5.5.5957.117',
 		fixed: [
 			{

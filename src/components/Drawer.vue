@@ -1,8 +1,13 @@
 <template lang="pug">
 q-drawer(:model-value="show" show-if-above side="left" ).bg-grey-2
 	q-list
-		q-item(clickable v-ripple :to="page.url" v-for="page in pages" :key="page.id" )
+		q-item(clickable v-ripple :to="page.url" v-for="page in pages" :key="page.id")
 			q-item-section(:class="page.classname") {{ page.title }}
+	br
+	br
+	q-separator
+	q-item(clickable to="/tree")
+		q-item-section Версии
 
 </template>
 
@@ -19,20 +24,14 @@ const pages = [
 	},
 	{
 		id: 1,
-		title: 'Список изменений в версиях',
-		url: '/version',
-		classname: 'tab',
-	},
-	{
-		id: 1,
 		title: 'Исправленные ошибки',
 		url: '/errors',
 		classname: 'tab',
 	},
 	{
-		id: 2,
-		title: 'Исправленные ошибки (tree)',
-		url: '/tree',
+		id: 1,
+		title: 'Список изменений',
+		url: '/version',
 		classname: 'tab',
 	},
 ]
@@ -48,5 +47,8 @@ const pages = [
 }
 .tab {
 	padding-left: 2rem;
+}
+.var {
+	color: red;
 }
 </style>

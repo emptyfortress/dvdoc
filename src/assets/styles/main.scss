@@ -44,3 +44,20 @@ ol {
 	grid-template-columns: 1fr 300px;
 	gap: 1rem;
 }
+
+.version {
+	font-size: 1.5rem;
+	border-bottom: 1px solid #ccc;
+	margin-top: 3rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	.date {
+		font-size: 0.9rem;
+		color: grey;
+	}
+}
+
+.hd .q-item__label {
+	font-size: 1.2rem;
+}

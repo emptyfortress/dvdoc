@@ -4,10 +4,10 @@
 		.zg Исправленные ошибки
 		template(v-for="error in filtered" :key="error.version")
 			.version(:id="error.version")
-				WordHighlighter(:query="filter") {{error.version}}
+				component(:is="WordHighlighter" :query="filter") {{error.version}}
 			.smallgrid(v-for="item in error.fixed" :key="item.id" )
-				WordHighlighter(:query="filter") {{item.id}}
-				WordHighlighter(:query="filter") {{item.text}}
+				component(:is="WordHighlighter" :query="filter") {{item.id}}
+				component(:is="WordHighlighter" :query="filter") {{item.text}}
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable @clear="filter = ''")
 			template(v-slot:prepend)
@@ -61,11 +61,6 @@ const handleScroll = (e: string) => {
 </script>
 
 <style scoped lang="scss">
-.version {
-	font-size: 1.5rem;
-	border-bottom: 1px solid #ccc;
-	margin-top: 3rem;
-}
 .smallgrid {
 	margin-top: 1rem;
 	display: grid;
