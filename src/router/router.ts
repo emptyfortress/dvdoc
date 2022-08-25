@@ -20,22 +20,10 @@ export const router = createRouter({
 			meta: { title: 'Docsvision docs', bread: ['Web-client'] },
 		},
 		{
-			path: '/tree',
-			name: 'tree',
-			component: () => import('@/components/Tree.vue'),
-			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Дерево'] },
-		},
-		{
-			path: '/errors',
-			name: 'error',
-			component: () => import('@/components/Errors.vue'),
-			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Ошибки solo'] },
-		},
-		{
 			path: '/version',
 			name: 'version',
 			component: () => import('@/components/Version.vue'),
-			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Список версий'] },
+			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Release notes'] },
 		},
 	],
 })

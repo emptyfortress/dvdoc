@@ -1,15 +1,16 @@
 <template lang="pug">
 .grid
 	.left
-		.zg Список версий
+		.zg Release notes
 		template(v-for="(ver, index) in errors" :key="ver.id")
 			.version(:id="ver.version")
 				.row.items-center
 					q-btn( dense unelevated icon="mdi-source-branch" color="accent").q-mr-md
 					div {{ver.version}}
-					//- q-icon(name="mdi-source-branch" color="accent").q-mr-md
 					//- .bad {{ver.version}}
-				.date(v-if="index !== 0") 23.07.2022
+				.row.items-center.q-pr-sm
+					.date(v-if="index !== 0").q-mr-lg 23.07.2022
+					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="expand(ver)")
 			q-expansion-item(label="Функциональные изменения" header-class="hd" icon="mdi-briefcase-outline" expand-separator v-if="index !== 0")
 				q-card-section
 					.smallgrid(v-for="item in feat")
@@ -55,6 +56,9 @@ const handleScroll = (e: string) => {
 	const offset = ele!.offsetTop - 75
 	const duration = 300
 	setVerticalScrollPosition(target, offset, duration)
+}
+const expand = (e) => {
+	console.log(e)
 }
 </script>
 <style scoped lang="scss">
