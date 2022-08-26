@@ -11,6 +11,8 @@
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
 					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="expand(ver)")
+			q-expansion-item(label="Разработка" header-class="hd" icon="mdi-application-braces-outline" expand-separator v-if="index !== 0")
+			q-expansion-item(label="Новые примеры в репозитории на github" header-class="hd" icon="mdi-github" expand-separator v-if="index !== 0")
 			q-expansion-item(label="Функциональные изменения" header-class="hd" icon="mdi-briefcase-outline" expand-separator v-if="index !== 0")
 				q-card-section
 					.smallgrid(v-for="item in feat")
@@ -29,7 +31,7 @@
 			q-expansion-item(label="Исправленные ошибки" header-class="hd" icon="mdi-alert-circle-outline" expand-separator)
 				q-card-section
 					.smallgrid1(v-for="item in ver.fixed")
-						.feat {{item.id}}
+						.feat {{item.label}}
 						div {{ item.text }}
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable @clear="filter = ''")
