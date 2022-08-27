@@ -55,10 +55,16 @@ const handleScroll = (e: string) => {
 }
 
 const filtered = computed(() => {
-	let filteredArray = versions.map((element) => {
-		return { ...element, data: element.data.filter((item) => item.label.includes(filter.value)) }
+	let temp = versions.filter((item) =>
+		item.data.some((el) => el.list.some((element) => element.text.includes('COM')))
+	)
+	return temp.map((item) => {
+		return {
+			...item,
+			data: item.data.filter((element) => element.list.some((el) => el.text.includes('COM'))),
+		}
 	})
-	return filteredArray.filter((item) => item.data.length > 0)
+	// return versions
 })
 
 const it = ref()
