@@ -2,37 +2,29 @@
 .grid
 	.left
 		.zg Release notes
-		template(v-for="(ver, index) in errors" :key="ver.id")
-			.version(:id="ver.version")
+		template(v-for="(version, index) in filtered" :key="version.id")
+			.version(:id="version.ver")
 				.row.items-center
 					q-btn( dense unelevated icon="mdi-source-branch" color="accent").q-mr-md
-					div {{ver.version}}
-					//- .bad {{ver.version}}
+					div {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
-					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="expand(ver)")
-			q-expansion-item(label="Разработка" header-class="hd" icon="mdi-application-braces-outline" expand-separator v-if="index !== 0")
-			q-expansion-item(label="Новые примеры в репозитории на github" header-class="hd" icon="mdi-github" expand-separator v-if="index !== 0")
-			q-expansion-item(label="Функциональные изменения" header-class="hd" icon="mdi-briefcase-outline" expand-separator v-if="index !== 0")
-				q-card-section
-					.smallgrid(v-for="item in feat")
-						.feat {{item.zag}}
-						div {{ item.text }}
-			q-expansion-item(label="Изменения в библиотеках элементов управления" header-class="hd" icon="mdi-bookshelf" expand-separator v-if="index !== 0")
-				q-card-section
-					.smallgrid(v-for="item in lib")
-						.feat {{item.zag}}
-						div {{ item.text }}
-			q-expansion-item(label="Оптимизации" header-class="hd" icon="mdi-rocket-launch" expand-separator v-if="index !== 0")
-				q-card-section
-					.smallgrid(v-for="item in optim")
-						.feat {{item.zag}}
-						div {{ item.text }}
-			q-expansion-item(label="Исправленные ошибки" header-class="hd" icon="mdi-alert-circle-outline" expand-separator)
-				q-card-section
-					.smallgrid1(v-for="item in ver.fixed")
-						.feat {{item.label}}
-						div {{ item.text }}
+					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="expandAll(index)")
+
+			q-list
+				q-expansion-item(v-for="(item, ind) in version.data"
+					ref="it"
+					:key="item.id"
+					:label="item.label"
+					header-class="hd"
+					:icon="item.icon"
+					expand-separator
+					)
+					q-card-section
+						.smallgrid(v-for="el in item.list")
+							.label {{el.label}}
+							.text(v-html="el.text")
+
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable @clear="filter = ''")
 			template(v-slot:prepend)
@@ -40,13 +32,13 @@
 		br
 		.sod Содержание
 		.list
-			div(v-for="item in errors" @click="handleScroll(item.version)" :key="item.version") {{item.version}}
+			div(v-for="item in versions" @click="handleScroll(item.ver)" :key="item.ver") {{item.ver}}
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { feat, lib, optim, versions } from '@/stores/changedata'
-import { errors } from '@/stores/data'
+import { ref, computed, onMounted } from 'vue'
+import type { Ref } from 'vue'
+import { versions } from '@/stores/data'
 import { scroll } from 'quasar'
 
 const { getScrollTarget, setVerticalScrollPosition } = scroll
@@ -59,10 +51,33 @@ const handleScroll = (e: string) => {
 	const duration = 300
 	setVerticalScrollPosition(target, offset, duration)
 }
-const expand = (e) => {
-	console.log(e)
+
+const filtered = computed(() => {
+	return versions
+})
+
+const itemRefs: any = ref([])
+const it = ref()
+
+const setRefs = (e: any, index: number, ind: number) => {
+	itemRefs.value[index].push(e)
+}
+
+const calcClass = (index: number) => {
+	return 'group' + index
+}
+const expandAll = (e: number) => {
+	let begin = 0
+	for (var i = 0; i < e; i++) {
+		begin = begin + filtered.value[i].data.length
+	}
+	let end = begin + filtered.value[e].data.length
+	for (i >= begin; i < end; i++) {
+		it.value[i].toggle()
+	}
 }
 </script>
+
 <style scoped lang="scss">
 //@import '@/assets/css/colors.scss';
 .smallgrid {
@@ -83,11 +98,8 @@ const expand = (e) => {
 	line-height: 120%;
 	margin-bottom: 1rem;
 }
-.feat {
+.label {
 	font-weight: 500;
 	font-style: italic;
-}
-.version {
-	// margin-left: 12px;
 }
 </style>
