@@ -51,34 +51,11 @@ const handleScroll = (e: string) => {
 	setVerticalScrollPosition(target, offset, duration)
 }
 
-// let filteredArray = arrayOfElements.filter((element) =>
-// 	element.subElements.some((subElement) => subElement.surname === surname)
-// )
-// arrayOfElements.map((element) => {
-// 	return {
-// 		...element,
-// 		subElements: element.subElements.filter((subElement) => subElement.surname === 1),
-// 	}
-// })
-
-// let filteredArray = arrayOfElements
-//   .filter((element) =>
-//     element.subElements.some((subElement) => subElement.surname === 1))
-//   .map(element => {
-//     let newElt = Object.assign({}, element); // copies element
-//     return newElt.subElements.filter(subElement => subElement.surname === '1');
-//   });
-
 const filtered = computed(() => {
 	let filteredArray = versions.map((element) => {
 		return { ...element, data: element.data.filter((item) => item.label.includes(filter.value)) }
 	})
-	return filteredArray
-
-	// let filteredArray = versions.filter((element) =>
-	// 	element.data.some((item) => item.label.includes(filter.value))
-	// )
-	// return filteredArray
+	return filteredArray.filter((item) => item.data.length > 0)
 })
 
 const it = ref()
