@@ -20,9 +20,11 @@
 					:icon="item.icon"
 					expand-separator
 					)
+
 					q-card-section
 						.smallgrid(v-for="el in item.list")
-							.label {{el.label}}
+							.label
+								component(:is="WordHighlighter" :query="filter") {{el.label}}
 							.text(v-html="el.text")
 
 	.side
@@ -39,6 +41,7 @@
 import { ref, computed } from 'vue'
 import { versions } from '@/stores/data'
 import { scroll } from 'quasar'
+import WordHighlighter from 'vue-word-highlighter'
 
 const { getScrollTarget, setVerticalScrollPosition } = scroll
 const filter = ref('')
