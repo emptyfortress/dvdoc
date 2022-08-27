@@ -36,8 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import type { Ref } from 'vue'
+import { ref, computed } from 'vue'
 import { versions } from '@/stores/data'
 import { scroll } from 'quasar'
 
@@ -56,16 +55,8 @@ const filtered = computed(() => {
 	return versions
 })
 
-const itemRefs: any = ref([])
 const it = ref()
 
-const setRefs = (e: any, index: number, ind: number) => {
-	itemRefs.value[index].push(e)
-}
-
-const calcClass = (index: number) => {
-	return 'group' + index
-}
 const expandAll = (e: number) => {
 	let begin = 0
 	for (var i = 0; i < e; i++) {
