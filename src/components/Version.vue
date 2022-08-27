@@ -56,15 +56,20 @@ const handleScroll = (e: string) => {
 
 const filtered = computed(() => {
 	let temp = versions.filter((item) =>
-		item.data.some((el) => el.list.some((element) => element.text.includes('COM')))
+		item.data.some((el) => el.list.some((element) => element.label.includes('API')))
 	)
-	return temp.map((item) => {
+	let temp1 = temp.map((item) => {
 		return {
 			...item,
-			data: item.data.filter((element) => element.list.some((el) => el.text.includes('COM'))),
+			data: item.data.filter((element) => element.list.some((el) => el.label.includes('API'))),
+		}.data.map((foo) => {
+			return {
+				...foo,
+				list: foo.list.filter((baz) => baz.label.includes('API')),
 		}
 	})
-	// return versions
+	})
+	return temp1
 })
 
 const it = ref()
