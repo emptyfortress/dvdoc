@@ -12,7 +12,7 @@
 					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="expandAll(index)")
 
 			q-list
-				q-expansion-item(v-for="(item, ind) in version.data"
+				q-expansion-item(v-for="(item, ind) in version.children"
 					ref="it"
 					:key="item.id"
 					:label="item.label"
@@ -22,7 +22,7 @@
 					)
 
 					q-card-section
-						.smallgrid(v-for="el in item.list")
+						.smallgrid(v-for="el in item.children")
 							.label
 								component(:is="WordHighlighter" :query="filter") {{el.label}}
 							div(v-html="el.text").text
@@ -54,30 +54,22 @@ const handleScroll = (e: string) => {
 	setVerticalScrollPosition(target, offset, duration)
 }
 
-// const filterByLabel = (array, searchTerm) => {
-// 	return array.reduce((prev, curr) => {
-// 			const children = curr.children ? filterByLabel(curr.children, searchTerm) : undefined;
+const filterByLabel = (array: any, searchTerm: string) => {
+	if (searchTerm !== '') {
+		return array.reduce((prev: any, curr: any) => {
+			const children = curr.children ? filterByLabel(curr.children, searchTerm) : undefined
 
-// 			return curr.label === searchTerm || children?.length > 0 ? [...prev, { ...curr, children }] : prev;
-// 	}, []);
-// }
+			return curr.label?.includes(searchTerm) || children?.length > 0
+				? [...prev, { ...curr, children }]
+				: prev
+		}, [])
+	}
+	return array
+}
 
 const filtered = computed(() => {
-	let temp = versions.filter((item) =>
-		item.data.some((el) => el.list.some((element) => element.text.includes('API')))
-	)
-
-	let temp1 = temp.map((item) => {
-		return {
-			...item,
-			data: item.data.filter((element) => element.list.some((el) => el.text.includes('API'))),
-		}
-	})
-
-	return temp1
+	return filterByLabel(versions, filter.value)
 })
-
-// console.log(filtered.value)
 
 const it = ref()
 
