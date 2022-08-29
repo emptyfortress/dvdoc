@@ -38,9 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onBeforeUpdate, watch } from 'vue'
-import type { Ref } from 'vue'
-
+import { ref, computed, onBeforeUpdate, watchEffect } from 'vue'
 import { versions } from '@/stores/data'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
@@ -61,7 +59,7 @@ const filterByLabel = (array: any, searchTerm: string) => {
 		return array.reduce((prev: any, curr: any) => {
 			const children = curr.children ? filterByLabel(curr.children, searchTerm) : undefined
 
-			return curr.label?.includes(searchTerm) || children?.length > 0
+			return curr.label?.toLowerCase().includes(searchTerm.toLowerCase()) || children?.length > 0
 				? [...prev, { ...curr, children }]
 				: prev
 		}, [])
@@ -81,6 +79,16 @@ const expandAll = (e: number) => {
 	let block = filtered.value[e].children.map((el: any) => el.id)
 	block.forEach((item: any) => it.value[item].toggle())
 }
+
+watchEffect(() => {
+	if (filter.value.length > 0) {
+		Object.keys(it.value).forEach((key) => {
+			if (it.value[key]) {
+				it.value[key].show()
+			}
+		})
+	}
+})
 </script>
 
 <style scoped lang="scss">
