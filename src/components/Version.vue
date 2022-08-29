@@ -25,7 +25,7 @@
 						.smallgrid(v-for="el in item.list")
 							.label
 								component(:is="WordHighlighter" :query="filter") {{el.label}}
-							.text(v-html="el.text")
+							div(v-html="el.text").text
 
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable @clear="filter = ''")
@@ -34,7 +34,7 @@
 		br
 		.sod Содержание
 		.list
-			div(v-for="item in versions" @click="handleScroll(item.ver)" :key="item.ver") {{item.ver}}
+			div(v-for="item in filtered" @click="handleScroll(item.ver)" :key="item.ver") {{item.ver}}
 </template>
 
 <script setup lang="ts">
@@ -44,7 +44,7 @@ import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
 
 const { getScrollTarget, setVerticalScrollPosition } = scroll
-const filter = ref('')
+const filter = ref('API')
 
 const handleScroll = (e: string) => {
 	const ele = document.getElementById(e) // You need to get your element here
@@ -54,23 +54,30 @@ const handleScroll = (e: string) => {
 	setVerticalScrollPosition(target, offset, duration)
 }
 
+// const filterByLabel = (array, searchTerm) => {
+// 	return array.reduce((prev, curr) => {
+// 			const children = curr.children ? filterByLabel(curr.children, searchTerm) : undefined;
+
+// 			return curr.label === searchTerm || children?.length > 0 ? [...prev, { ...curr, children }] : prev;
+// 	}, []);
+// }
+
 const filtered = computed(() => {
 	let temp = versions.filter((item) =>
-		item.data.some((el) => el.list.some((element) => element.label.includes('API')))
+		item.data.some((el) => el.list.some((element) => element.text.includes('API')))
 	)
+
 	let temp1 = temp.map((item) => {
 		return {
 			...item,
-			data: item.data.filter((element) => element.list.some((el) => el.label.includes('API'))),
-		}.data.map((foo) => {
-			return {
-				...foo,
-				list: foo.list.filter((baz) => baz.label.includes('API')),
+			data: item.data.filter((element) => element.list.some((el) => el.text.includes('API'))),
 		}
 	})
-	})
+
 	return temp1
 })
+
+// console.log(filtered.value)
 
 const it = ref()
 

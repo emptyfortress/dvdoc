@@ -7,7 +7,6 @@ const versions = [
 				id: '01',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
-				model: false,
 				list: [{ label: 'ERR-2514', text: 'Ошибка при обновлении ВК' }],
 			},
 		],
@@ -20,7 +19,6 @@ const versions = [
 				id: '11',
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
-				model: false,
 				list: [
 					{
 						id: 0,
@@ -63,7 +61,6 @@ const versions = [
 				id: '12',
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
-				model: false,
 				list: [
 					{
 						label: 'Лист ознакомления',
@@ -87,7 +84,6 @@ const versions = [
 				id: '13',
 				label: 'Оптимизации',
 				icon: 'mdi-rocket-launch',
-				model: false,
 				list: [
 					{
 						label: 'Функция "Общие справочники"',
@@ -99,7 +95,6 @@ const versions = [
 				id: '14',
 				label: 'Разработка',
 				icon: 'mdi-application-braces-outline',
-				model: false,
 				list: [
 					{
 						label: 'Изменения в API',
@@ -111,7 +106,6 @@ const versions = [
 				id: '15',
 				label: 'Новые примеры в репозитории на github',
 				icon: 'mdi-github',
-				model: false,
 				list: [
 					{
 						label: 'Github',
@@ -123,7 +117,6 @@ const versions = [
 				id: '16',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
-				model: false,
 				list: [
 					{
 						label: 'ERR-2464',
@@ -173,7 +166,6 @@ const versions = [
 				id: '21',
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
-				model: false,
 				list: [
 					{
 						label: 'Сертификат ЭП сотрудника',
@@ -195,7 +187,6 @@ const versions = [
 				id: '22',
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
-				model: false,
 				list: [
 					{
 						label: 'Строка конструктора справочников',
@@ -219,7 +210,6 @@ const versions = [
 				id: '23',
 				label: 'Оптимизации',
 				icon: 'mdi-rocket-launch',
-				model: false,
 				list: [
 					{
 						label: 'Консоль браузера',
@@ -231,7 +221,6 @@ const versions = [
 				id: '24',
 				label: 'Новые примеры в репозитории на github',
 				icon: 'mdi-github',
-				model: false,
 				list: [
 					{
 						label: 'Github',
@@ -243,7 +232,6 @@ const versions = [
 				id: '25',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
-				model: false,
 				list: [
 					{ label: 'ERR-2174', text: 'Календарь по умолчанию не учитывается при расчёте сроков.' },
 					{
@@ -304,7 +292,6 @@ const versions = [
 				id: '31',
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
-				model: false,
 				list: [
 					{
 						label: 'Иконки',
@@ -328,7 +315,6 @@ const versions = [
 				id: '32',
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
-				model: false,
 				list: [
 					{
 						label: 'Изменения разметки WebFrame',
@@ -344,7 +330,6 @@ const versions = [
 				id: '33',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
-				model: false,
 				list: [
 					{
 						label: 'ERR-2085',
@@ -406,7 +391,6 @@ const versions = [
 				id: '41',
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
-				model: false,
 				list: [
 					{
 						label: 'Свойство прозрачность',
@@ -430,7 +414,6 @@ const versions = [
 				id: '42',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
-				model: false,
 				list: [
 					{
 						label: 'ERR-1795',
@@ -501,7 +484,6 @@ const versions = [
 				id: '51',
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
-				model: false,
 				list: [
 					{
 						label: 'Вывод краткой информации о сотруднике',
@@ -525,7 +507,6 @@ const versions = [
 				id: '52',
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
-				model: false,
 				list: [
 					{
 						label: 'Элементы управления нового грида',
@@ -549,7 +530,6 @@ const versions = [
 				id: '53',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
-				model: false,
 				list: [
 					{ label: 'ERR-1356', text: 'TextArea HtmlEditor автоматический Scroll.' },
 					{ label: 'ERR-1421', text: 'Ошибка "NullReferenceException" в StaffDirectoryItems.' },
@@ -614,7 +594,6 @@ const versions = [
 				id: '61',
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
-				model: false,
 				list: [
 					{
 						label: 'Доработан элемент управления "Текст"',
@@ -646,7 +625,6 @@ const versions = [
 				id: '62',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
-				model: false,
 				list: [
 					{
 						label: 'ERR-1229',
@@ -705,7 +683,6 @@ const versions = [
 				id: '71',
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
-				model: false,
 				list: [
 					{
 						label: 'Новые групповые операции',
@@ -725,7 +702,6 @@ const versions = [
 				id: '72',
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
-				model: false,
 				list: [
 					{
 						label: 'Новое свойство ЭУ "Данные папки"',
@@ -750,7 +726,6 @@ const versions = [
 				id: '73',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
-				model: false,
 				list: [
 					{
 						label: 'ERR-1022',
