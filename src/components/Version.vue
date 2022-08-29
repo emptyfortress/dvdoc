@@ -13,7 +13,7 @@
 
 			q-list
 				q-expansion-item(v-for="(item, ind) in version.children"
-					:ref="(el: any) => it.push({ [item.id]:  el })"
+					:ref="(el: any) => it[item.id] = el"
 					:key="item.id"
 					:label="item.label"
 					header-class="hd"
@@ -73,54 +73,13 @@ const filtered = computed(() => {
 	return filterByLabel(versions, filter.value)
 })
 
-const it: Ref<any[]> = ref([])
+const it: any = ref({})
 
-onBeforeUpdate(() => (it.value = []))
-
-// let arr = [
-// 	{ name: 'string 1', value: 'this', other: 'that' },
-// 	{ name: 'string 2', value: 'this', other: 'that' },
-// ]
-
-// let obj = arr.find((o, i) => {
-// 	if (o.name === 'string 1') {
-// 		arr[i] = { name: 'new string', value: 'this', other: 'that' }
-// 		return true // stop searching
-// 	}
-// })
+onBeforeUpdate(() => (it.value = {}))
 
 const expandAll = (e: number) => {
-	it.value.forEach((item) => item.show())
-
-	// let temp = filtered.value[e].children
-	// console.log(temp)
-	// console.log(it.value[0])
-	// console.log(it.value)
-	// let finding = it.value.find((item) => item[fuck] === fuck)
-	// console.log(finding)
-	// temp.forEach((item: any) => {
-	// 	let id = item.id
-	// 	let index = it.value.findIndex((el) => el[id] === id)
-	// 	it.value[index][id].show()
-	// })
-	// it.value[0].fuck.show()
-
-	// temp.forEach((item: any) => {
-	// 	filtered.value.find((o, i) => {
-	// 		if (o[item.id] === item.id) {
-	// 			it.value[i].show()
-	// 		}
-	// 	})
-	// })
-
-	// let begin = 0
-	// for (var i = 0; i < e; i++) {
-	// 	begin = begin + filtered.value[i].children.length
-	// }
-	// let end = begin + filtered.value[e].children.length
-	// for (i >= begin; i < end; i++) {
-	// 	it.value[i].toggle()
-	// }
+	let block = filtered.value[e].children.map((el: any) => el.id)
+	block.forEach((item: any) => it.value[item].toggle())
 }
 </script>
 
