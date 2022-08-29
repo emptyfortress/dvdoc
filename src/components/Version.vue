@@ -13,7 +13,7 @@
 
 			q-list
 				q-expansion-item(v-for="(item, ind) in version.children"
-					ref="it"
+					:ref="(el: any) => it.push({ [item.id]:  el })"
 					:key="item.id"
 					:label="item.label"
 					header-class="hd"
@@ -38,13 +38,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeUpdate, watch } from 'vue'
+import type { Ref } from 'vue'
+
 import { versions } from '@/stores/data'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
 
 const { getScrollTarget, setVerticalScrollPosition } = scroll
-const filter = ref('API')
+const filter = ref('')
 
 const handleScroll = (e: string) => {
 	const ele = document.getElementById(e) // You need to get your element here
@@ -71,17 +73,54 @@ const filtered = computed(() => {
 	return filterByLabel(versions, filter.value)
 })
 
-const it = ref()
+const it: Ref<any[]> = ref([])
+
+onBeforeUpdate(() => (it.value = []))
+
+// let arr = [
+// 	{ name: 'string 1', value: 'this', other: 'that' },
+// 	{ name: 'string 2', value: 'this', other: 'that' },
+// ]
+
+// let obj = arr.find((o, i) => {
+// 	if (o.name === 'string 1') {
+// 		arr[i] = { name: 'new string', value: 'this', other: 'that' }
+// 		return true // stop searching
+// 	}
+// })
 
 const expandAll = (e: number) => {
-	let begin = 0
-	for (var i = 0; i < e; i++) {
-		begin = begin + filtered.value[i].data.length
-	}
-	let end = begin + filtered.value[e].data.length
-	for (i >= begin; i < end; i++) {
-		it.value[i].toggle()
-	}
+	it.value.forEach((item) => item.show())
+
+	// let temp = filtered.value[e].children
+	// console.log(temp)
+	// console.log(it.value[0])
+	// console.log(it.value)
+	// let finding = it.value.find((item) => item[fuck] === fuck)
+	// console.log(finding)
+	// temp.forEach((item: any) => {
+	// 	let id = item.id
+	// 	let index = it.value.findIndex((el) => el[id] === id)
+	// 	it.value[index][id].show()
+	// })
+	// it.value[0].fuck.show()
+
+	// temp.forEach((item: any) => {
+	// 	filtered.value.find((o, i) => {
+	// 		if (o[item.id] === item.id) {
+	// 			it.value[i].show()
+	// 		}
+	// 	})
+	// })
+
+	// let begin = 0
+	// for (var i = 0; i < e; i++) {
+	// 	begin = begin + filtered.value[i].children.length
+	// }
+	// let end = begin + filtered.value[e].children.length
+	// for (i >= begin; i < end; i++) {
+	// 	it.value[i].toggle()
+	// }
 }
 </script>
 
