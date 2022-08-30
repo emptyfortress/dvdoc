@@ -4,12 +4,12 @@
 		.zg Release notes
 		template(v-if="filtered.length === 0")
 			.notfound
-				q-icon(name="mdi-emoticon-devil-outline" size="md").q-mr-md
+				q-icon(name="mdi-emoticon-cry-outline" size="md").q-mr-md
 				span Ничего нет. Попробуйте изменить запрос.
 		template(v-else v-for="(version, index) in filtered" :key="version.id")
 			.version(:id="version.ver")
 				.row.items-center
-					q-btn( dense unelevated icon="mdi-source-branch" color="accent").q-mr-md
+					q-btn( dense unelevated icon="mdi-source-branch" color="accent" @click="test(version)").q-mr-md
 					div {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
@@ -85,10 +85,6 @@ const filterByLabel = (array: any, searchTerm: string) => {
 			: prev
 	}, [])
 }
-
-// const test = (e) => {
-// 	console.log(e)
-// }
 
 const filtered = computed(() => {
 	if (filter.value !== '') {

@@ -15,6 +15,7 @@ const versions = [
 		],
 	},
 	{
+		id: 'fuck',
 		ver: '5.5.5957.274',
 		children: [
 			{
@@ -228,6 +229,7 @@ const versions = [
 		],
 	},
 	{
+		id: uid(),
 		ver: '5.5.5957.250',
 		children: [
 			{
@@ -377,6 +379,7 @@ const versions = [
 					{
 						id: uid(),
 						label: 'ERR-2102',
+						id: uid(),
 						text: 'IFileConvertationService должен поддерживать использование клиентских конвертеров.',
 						children: [],
 					},
@@ -415,6 +418,7 @@ const versions = [
 		],
 	},
 	{
+		id: uid(),
 		ver: '5.5.5957.226',
 		children: [
 			{
@@ -566,6 +570,7 @@ const versions = [
 					{
 						id: uid(),
 						label: 'ERR-1566',
+						id: uid(),
 						text: 'Ошибка при генерации номера документа : Internal Server Error.',
 						children: [],
 					},
@@ -574,6 +579,7 @@ const versions = [
 		],
 	},
 	{
+		id: uid(),
 		ver: '5.5.5957.195',
 		children: [
 			{
@@ -599,6 +605,7 @@ const versions = [
 					{
 						id: uid(),
 						label: 'Автоматическое резервное копирование',
+						id: uid(),
 						text: 'Теперь при обновлении происходит автоматическое резервное копирование файлов WebClient.xml WebClientServerExtension.xml, если при обновлении включен соответствующий флаг.',
 						children: [],
 					},
@@ -631,6 +638,7 @@ const versions = [
 					{
 						id: uid(),
 						label: 'ERR-1639',
+						id: uid(),
 						text: 'Ошибка internal Server Error при отмене создания задания на исполнение.',
 						children: [],
 					},
@@ -711,6 +719,7 @@ const versions = [
 		],
 	},
 	{
+		id: uid(),
 		ver: '5.5.5957.174',
 		children: [
 			{
@@ -882,6 +891,7 @@ const versions = [
 		],
 	},
 	{
+		id: uid(),
 		ver: '5.5.5957.141',
 		children: [
 			{
@@ -1008,6 +1018,7 @@ const versions = [
 		],
 	},
 	{
+		id: uid(),
 		ver: '5.5.5957.117',
 		children: [
 			{
