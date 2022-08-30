@@ -9,11 +9,14 @@
 					div {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
-					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="myitems.expandBlock(version)")
+					q-btn(v-if="filter.length < 1" dense flat round
+						color="accent"
+						icon="mdi-unfold-more-horizontal"
+						@click="handleClick($event, version)" )
+						q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
 
 			q-list
 				q-expansion-item(v-for="(item) in version.children"
-					:ref="(el: any) => it[item.id] = el"
 					:key="item.id"
 					:label="item.label"
 					header-class="hd"
@@ -40,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onBeforeUpdate, watchEffect, reactive } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { versions } from '@/stores/data'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
@@ -77,15 +80,16 @@ const filtered = computed(() => {
 	return filterByLabel(myitems.versions, filter.value)
 })
 
-const it: any = reactive({})
-
-onBeforeUpdate(() => Object.assign(it, {}))
-
 watchEffect(() => {
 	if (filter.value.length > 1) {
 		myitems.expandAll()
 	}
 })
+const handleClick = (e: any, version: any) => {
+	if (e.shiftKey) {
+		myitems.toggleAll()
+	} else myitems.expandBlock(version)
+}
 </script>
 
 <style scoped lang="scss">

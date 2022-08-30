@@ -36,5 +36,22 @@ export const useItems = defineStore({
 				}
 			})
 		},
+		toggleAll() {
+			this.versions = this.versions.map((item) => {
+				return {
+					id: item.id,
+					ver: item.ver,
+					children: item.children?.map((el) => {
+						return {
+							id: el.id,
+							label: el.label,
+							icon: el.icon,
+							model: !el.model,
+							children: el.children,
+						}
+					}),
+				}
+			})
+		},
 	},
 })

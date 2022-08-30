@@ -58,8 +58,11 @@ ol {
 	}
 }
 
-.hd .q-item__label {
-	font-size: 1.2rem;
+.hd {
+	padding-right: 13px;
+	.q-item__label {
+		font-size: 1.2rem;
+	}
 }
 
 .q-tree__node-body {
