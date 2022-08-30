@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import Drawer from '@/components/Drawer.vue'
-import RDrawer from '@/components/RDrawer.vue'
 import { useRoute } from 'vue-router'
 
 const leftDrawer = ref(true)
-const rightDrawer = ref(true)
 const route = useRoute()
 </script>
 
@@ -23,7 +21,6 @@ q-layout(view="hHh LpR fFf")
 			.site Дополнительно
 
 	Drawer(:show="leftDrawer")
-	//- RDrawer(:show="rightDrawer")
 
 	.subbar
 		q-btn(flat round dense icon="mdi-home-outline").q-mr-sm

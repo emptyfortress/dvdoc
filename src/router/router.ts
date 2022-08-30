@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '@/pages/Home.vue'
-// import Home from '@/pages/Home.vue'
 
 declare module 'vue-router' {
 	interface RouteMeta {
