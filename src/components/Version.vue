@@ -116,7 +116,7 @@ const test = () => {
 	column-gap: 1rem;
 	font-size: 1rem;
 	line-height: 120%;
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
 }
 .smallgrid1 {
 	margin-left: 4rem;
