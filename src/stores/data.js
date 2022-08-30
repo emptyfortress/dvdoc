@@ -6,10 +6,10 @@ const versions = [
 		ver: 'Войдет в следующую версию',
 		children: [
 			{
-				id: uid(),
+				id: 'fuck',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
-				children: [{ label: 'ERR-2514', text: 'Ошибка при обновлении ВК' }],
+				children: [{ label: 'fuck', text: 'Ошибка при обновлении ВК' }],
 			},
 		],
 	},

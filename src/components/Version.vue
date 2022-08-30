@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onBeforeUpdate, watchEffect } from 'vue'
+import { ref, computed, onBeforeUpdate, watchEffect, reactive } from 'vue'
 import { versions } from '@/stores/data'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
@@ -71,20 +71,23 @@ const filtered = computed(() => {
 	return filterByLabel(versions, filter.value)
 })
 
-const it: any = ref({})
+const it: any = reactive({})
 
-onBeforeUpdate(() => (it.value = {}))
+onBeforeUpdate(() => Object.assign(it, {}))
 
 const expandAll = (e: number) => {
+	console.log(e)
 	let block = filtered.value[e].children.map((el: any) => el.id)
-	block.forEach((item: any) => it.value[item].toggle())
+	console.log(block)
+	console.log(it['fuck'])
+	// block.forEach((item: any) => it[item].toggle())
 }
 
 watchEffect(() => {
-	if (filter.value.length > 0) {
-		Object.keys(it.value).forEach((key) => {
-			if (it.value[key]) {
-				it.value[key].show()
+	if (filter.value.length > 1) {
+		Object.keys(it).forEach((key) => {
+			if (it[key]) {
+				it[key].show()
 			}
 		})
 	}
