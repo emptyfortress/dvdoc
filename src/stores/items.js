@@ -1,14 +1,17 @@
 import { defineStore } from 'pinia'
-import { versions } from '@/stores/data'
 
 export const useItems = defineStore({
 	id: 'items',
 	state: () => ({
-		versions: versions,
+		versions: [],
 	}),
 	getters: {},
 	actions: {
-		expandAll(version) {
+		setVersions(payload) {
+			this.versions = payload
+		},
+		expandBlock(version) {
+			console.log(version)
 			let opened = version.children.filter((item) => item.model)
 			if (opened.length < version.children.length / 2) {
 				version.children.map((item) => (item.model = true))
@@ -16,6 +19,23 @@ export const useItems = defineStore({
 		},
 		toggleModel(item) {
 			item.model = !item.model
+		},
+		expandAll() {
+			this.versions = this.versions.map((item) => {
+				return {
+					id: item.id,
+					ver: item.ver,
+					children: item.children?.map((el) => {
+						return {
+							id: el.id,
+							label: el.label,
+							icon: el.icon,
+							model: true,
+							children: el.children,
+						}
+					}),
+				}
+			})
 		},
 	},
 })

@@ -9,7 +9,7 @@
 					div {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
-					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="myitems.expandAll(version)")
+					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="myitems.expandBlock(version)")
 
 			q-list
 				q-expansion-item(v-for="(item) in version.children"
@@ -47,6 +47,7 @@ import WordHighlighter from 'vue-word-highlighter'
 import { useItems } from '@/stores/items'
 
 const myitems = useItems()
+myitems.setVersions(versions)
 
 const { getScrollTarget, setVerticalScrollPosition } = scroll
 const filter = ref('')
@@ -80,24 +81,11 @@ const it: any = reactive({})
 
 onBeforeUpdate(() => Object.assign(it, {}))
 
-const expandAll = (e: number) => {
-	console.log(e)
-	let block = filtered.value[e].children.map((el: any) => el.id)
-	console.log(block)
-	console.log(it['fuck'])
-	// block.forEach((item: any) => it[item].toggle())
-}
-
-// watchEffect(() => {
-// 	if (filter.value.length > 1) {
-// 		myitems.expandAll()
-// 		// Object.keys(it).forEach((key) => {
-// 		// 	if (it[key]) {
-// 		// 		it[key].show()
-// 		// 	}
-// 		// })
-// 	}
-// })
+watchEffect(() => {
+	if (filter.value.length > 1) {
+		myitems.expandAll()
+	}
+})
 </script>
 
 <style scoped lang="scss">

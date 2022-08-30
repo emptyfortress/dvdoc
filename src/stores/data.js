@@ -10,7 +10,7 @@ const versions = [
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
 				model: false,
-				children: [{ label: 'fuck', text: 'Ошибка при обновлении ВК' }],
+				children: [{ label: 'ERR-2514', text: 'Ошибка при обновлении ВК' }],
 			},
 		],
 	},
