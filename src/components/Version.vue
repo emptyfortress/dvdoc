@@ -9,7 +9,7 @@
 		template(v-else v-for="(version, index) in filtered" :key="version.id")
 			.version(:id="version.ver")
 				.row.items-center
-					q-btn( dense unelevated icon="mdi-source-branch" color="accent" @click="test(version)").q-mr-md
+					q-btn( dense unelevated icon="mdi-source-branch" color="accent" @click="test").q-mr-md
 					div {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
@@ -102,6 +102,9 @@ const handleClick = (e: any, version: any) => {
 	if (e.shiftKey) {
 		myitems.toggleAll()
 	} else myitems.expandBlock(version)
+}
+const test = () => {
+	console.log(filtered.value)
 }
 </script>
 
