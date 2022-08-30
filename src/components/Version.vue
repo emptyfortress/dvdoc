@@ -68,7 +68,9 @@ const filterByLabel = (array: any, searchTerm: string) => {
 		return array.reduce((prev: any, curr: any) => {
 			const children = curr.children ? filterByLabel(curr.children, searchTerm) : undefined
 
-			return curr.label?.toLowerCase().includes(searchTerm.toLowerCase()) || children?.length > 0
+			return curr.label?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				curr.text?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				children?.length > 0
 				? [...prev, { ...curr, children }]
 				: prev
 		}, [])
