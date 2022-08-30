@@ -9,6 +9,7 @@ const versions = [
 				id: 'fuck',
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
+				model: false,
 				children: [{ label: 'fuck', text: 'Ошибка при обновлении ВК' }],
 			},
 		],
@@ -20,6 +21,7 @@ const versions = [
 				id: uid(),
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -69,6 +71,7 @@ const versions = [
 				id: uid(),
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -100,6 +103,7 @@ const versions = [
 				id: uid(),
 				label: 'Оптимизации',
 				icon: 'mdi-rocket-launch',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -113,6 +117,7 @@ const versions = [
 				id: uid(),
 				label: 'Разработка',
 				icon: 'mdi-application-braces-outline',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -126,6 +131,7 @@ const versions = [
 				id: uid(),
 				label: 'Новые примеры в репозитории на github',
 				icon: 'mdi-github',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -139,6 +145,7 @@ const versions = [
 				id: uid(),
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -223,6 +230,7 @@ const versions = [
 				id: uid(),
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -250,6 +258,7 @@ const versions = [
 				id: uid(),
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -281,6 +290,7 @@ const versions = [
 				id: uid(),
 				label: 'Оптимизации',
 				icon: 'mdi-rocket-launch',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -294,6 +304,7 @@ const versions = [
 				id: uid(),
 				label: 'Новые примеры в репозитории на github',
 				icon: 'mdi-github',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -307,6 +318,7 @@ const versions = [
 				id: uid(),
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -403,6 +415,7 @@ const versions = [
 				id: uid(),
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -434,6 +447,7 @@ const versions = [
 				id: uid(),
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -453,6 +467,7 @@ const versions = [
 				id: uid(),
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -555,6 +570,7 @@ const versions = [
 				id: uid(),
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -586,6 +602,7 @@ const versions = [
 				id: uid(),
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -688,6 +705,7 @@ const versions = [
 				id: uid(),
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -719,6 +737,7 @@ const versions = [
 				id: uid(),
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -750,6 +769,7 @@ const versions = [
 				id: uid(),
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -852,6 +872,7 @@ const versions = [
 				id: uid(),
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -889,6 +910,7 @@ const versions = [
 				id: uid(),
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -976,6 +998,7 @@ const versions = [
 				id: uid(),
 				label: 'Функциональные изменения',
 				icon: 'mdi-briefcase-outline',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -998,6 +1021,7 @@ const versions = [
 				id: uid(),
 				label: 'Изменения в библиотеках элементов управления',
 				icon: 'mdi-bookshelf',
+				model: false,
 				children: [
 					{
 						id: uid(),
@@ -1030,6 +1054,7 @@ const versions = [
 				id: uid(),
 				label: 'Исправленные ошибки',
 				icon: 'mdi-alert',
+				model: false,
 				children: [
 					{
 						id: uid(),

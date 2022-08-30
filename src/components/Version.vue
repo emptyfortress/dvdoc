@@ -9,16 +9,18 @@
 					div {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
-					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="expandAll(index)")
+					q-btn(dense flat round color="accent" icon="mdi-unfold-more-horizontal" @click="myitems.expandAll(version)")
 
 			q-list
-				q-expansion-item(v-for="(item, ind) in version.children"
+				q-expansion-item(v-for="(item) in version.children"
 					:ref="(el: any) => it[item.id] = el"
 					:key="item.id"
 					:label="item.label"
 					header-class="hd"
 					:icon="item.icon"
 					expand-separator
+					:model-value="item.model"
+					@click="myitems.toggleModel(item)"
 					)
 
 					q-card-section
@@ -42,6 +44,9 @@ import { ref, computed, onBeforeUpdate, watchEffect, reactive } from 'vue'
 import { versions } from '@/stores/data'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
+import { useItems } from '@/stores/items'
+
+const myitems = useItems()
 
 const { getScrollTarget, setVerticalScrollPosition } = scroll
 const filter = ref('')
@@ -68,7 +73,7 @@ const filterByLabel = (array: any, searchTerm: string) => {
 }
 
 const filtered = computed(() => {
-	return filterByLabel(versions, filter.value)
+	return filterByLabel(myitems.versions, filter.value)
 })
 
 const it: any = reactive({})
@@ -83,15 +88,16 @@ const expandAll = (e: number) => {
 	// block.forEach((item: any) => it[item].toggle())
 }
 
-watchEffect(() => {
-	if (filter.value.length > 1) {
-		Object.keys(it).forEach((key) => {
-			if (it[key]) {
-				it[key].show()
-			}
-		})
-	}
-})
+// watchEffect(() => {
+// 	if (filter.value.length > 1) {
+// 		myitems.expandAll()
+// 		// Object.keys(it).forEach((key) => {
+// 		// 	if (it[key]) {
+// 		// 		it[key].show()
+// 		// 	}
+// 		// })
+// 	}
+// })
 </script>
 
 <style scoped lang="scss">
