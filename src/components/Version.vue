@@ -2,7 +2,11 @@
 .grid
 	.left
 		.zg Release notes
-		template(v-for="(version, index) in filtered" :key="version.id")
+		template(v-if="filtered.length === 0")
+			.notfound
+				q-icon(name="mdi-emoticon-devil-outline" size="md").q-mr-md
+				span Ничего нет. Попробуйте изменить запрос.
+		template(v-else v-for="(version, index) in filtered" :key="version.id")
 			.version(:id="version.ver")
 				.row.items-center
 					q-btn( dense unelevated icon="mdi-source-branch" color="accent").q-mr-md
@@ -18,7 +22,7 @@
 			q-list
 				q-expansion-item(v-for="(item) in version.children"
 					:key="item.id"
-					:label="item.label"
+					:label="item.head"
 					header-class="hd"
 					:icon="item.icon"
 					expand-separator
@@ -26,11 +30,18 @@
 					@click="myitems.toggleModel(item)"
 					)
 
-					q-card-section
-						.smallgrid(v-for="el in item.children")
+					q-card-section(v-for="el in item.children")
+						.smallgrid
 							.label
 								component(:is="WordHighlighter" :query="filter") {{el.label}}
-							div(v-html="el.text").text
+							.text
+								component(:is="WordHighlighter" :query="filter") {{el.text}}
+								br
+								q-btn(v-if="el.more" unelevated color="accent" label="Еще" @click="myitems.toggleMore(el)" size="xs")
+						.more(v-if="el.more && el.show")
+							div(v-html="el.more")
+							div Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.
+							q-img(src="https://picsum.photos/seed/picsum/600/200")
 
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable @clear="filter = ''")
@@ -95,7 +106,6 @@ const handleClick = (e: any, version: any) => {
 </script>
 
 <style scoped lang="scss">
-//@import '@/assets/css/colors.scss';
 .smallgrid {
 	margin-left: 4rem;
 	display: grid;
@@ -117,5 +127,15 @@ const handleClick = (e: any, version: any) => {
 .label {
 	font-weight: 500;
 	font-style: italic;
+}
+.notfound {
+	padding: 1rem;
+	border: 1px solid pink;
+	background: $pink-1;
+	font-size: 1rem;
+}
+.more {
+	font-size: 1.1rem;
+	margin-left: 4rem;
 }
 </style>

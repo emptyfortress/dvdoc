@@ -27,6 +27,7 @@ export const useItems = defineStore({
 					children: item.children?.map((el) => {
 						return {
 							id: el.id,
+							head: el.head,
 							label: el.label,
 							icon: el.icon,
 							model: true,
@@ -36,6 +37,10 @@ export const useItems = defineStore({
 				}
 			})
 		},
+		toggleMore(item) {
+			item.show = !item.show
+			console.log(item)
+		},
 		toggleAll() {
 			this.versions = this.versions.map((item) => {
 				return {
@@ -44,6 +49,7 @@ export const useItems = defineStore({
 					children: item.children?.map((el) => {
 						return {
 							id: el.id,
+							head: el.head,
 							label: el.label,
 							icon: el.icon,
 							model: !el.model,
