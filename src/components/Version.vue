@@ -30,18 +30,18 @@
 					@click="myitems.toggleModel(item)"
 					)
 
-					q-card-section(v-for="el in item.children")
+					q-card-section(v-for="el in item.children" :key="el.label")
 						.smallgrid
 							.label
 								component(:is="WordHighlighter" :query="filter") {{el.label}}
 							.text
 								component(:is="WordHighlighter" :query="filter") {{el.text}}
 								br
-								q-btn(v-if="el.more" unelevated color="accent" label="Еще" @click="myitems.toggleMore(el)" size="xs")
+								q-btn(v-if="el.more" unelevated color="accent" label="Еще" size="xs" @click="el.show = !el.show")
 						.more(v-if="el.more && el.show")
 							div(v-html="el.more")
 							div Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.
-							q-img(src="https://picsum.photos/seed/picsum/600/200")
+							q-img(src="https://picsum.photos/id/103/600/300")
 
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable @clear="filter = ''")
@@ -75,22 +75,26 @@ const handleScroll = (e: string) => {
 }
 
 const filterByLabel = (array: any, searchTerm: string) => {
-	if (searchTerm !== '') {
-		return array.reduce((prev: any, curr: any) => {
-			const children = curr.children ? filterByLabel(curr.children, searchTerm) : undefined
+	return array.reduce((prev: any, curr: any) => {
+		const children = curr.children ? filterByLabel(curr.children, searchTerm) : undefined
 
-			return curr.label?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				curr.text?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				children?.length > 0
-				? [...prev, { ...curr, children }]
-				: prev
-		}, [])
-	}
-	return array
+		return curr.label?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			curr.text?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			children?.length > 0
+			? [...prev, { ...curr, children }]
+			: prev
+	}, [])
 }
 
+// const test = (e) => {
+// 	console.log(e)
+// }
+
 const filtered = computed(() => {
-	return filterByLabel(myitems.versions, filter.value)
+	if (filter.value !== '') {
+		return filterByLabel(myitems.versions, filter.value)
+	}
+	return myitems.versions
 })
 
 watchEffect(() => {
