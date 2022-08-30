@@ -11,7 +11,6 @@ export const useItems = defineStore({
 			this.versions = payload
 		},
 		expandBlock(version) {
-			console.log(version)
 			let opened = version.children.filter((item) => item.model)
 			if (opened.length < version.children.length / 2) {
 				version.children.map((item) => (item.model = true))
