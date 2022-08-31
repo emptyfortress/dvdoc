@@ -9,7 +9,7 @@
 		template(v-else v-for="(version, index) in filtered" :key="version.id")
 			.version(:id="version.ver")
 				.row.items-center
-					q-btn( dense unelevated icon="mdi-source-branch" color="accent" @click="test(version)").q-mr-md
+					q-btn( dense unelevated icon="mdi-source-branch" color="accent").q-mr-md
 					div {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
@@ -19,7 +19,7 @@
 						@click="handleClick($event, version)" )
 						q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
 
-			q-list
+			q-list(v-intersection="intersectionObject" :id="version.ver")
 				q-expansion-item(v-for="(item) in version.children"
 					:key="item.id"
 					:label="item.head"
@@ -50,7 +50,7 @@
 		br
 		.sod Содержание
 		.list
-			div(v-for="item in filtered" @click="handleScroll(item.ver)" :key="item.ver") {{item.ver}}
+			.empt(v-for="item in filtered" @click="handleScroll(item.ver)" :key="item.ver" :class="calcClass(item.ver)") {{item.ver}}
 </template>
 
 <script setup lang="ts">
@@ -59,7 +59,33 @@ import { versions } from '@/stores/data'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
 import { useItems } from '@/stores/items'
+import type { Ref } from 'vue'
 
+const inView: Ref<String[]> = ref([])
+
+const add = (e: string) => {
+	remove(e)
+	inView.value.push(e)
+}
+const remove = (e: string) => {
+	let index
+	while ((index = inView.value.indexOf(e)) > -1) {
+		inView.value.splice(index, 1)
+	}
+}
+const intersection = (entry: any) => {
+	if (entry.isIntersecting === true) {
+		add(entry.target.id)
+	} else {
+		remove(entry.target.id)
+	}
+}
+const intersectionObject = {
+	handler: intersection,
+	cfg: {
+		rootMargin: '-120px',
+	},
+}
 const myitems = useItems()
 myitems.setVersions(versions)
 
@@ -112,6 +138,11 @@ const more = (id: string, label: string) => {
 	let el = document.getElementById(id + label)
 	el?.classList.toggle('hid')
 }
+const calcClass = (e: string) => {
+	if (inView.value.some((el) => el === e)) {
+		return 'visib'
+	} else return ''
+}
 </script>
 
 <style scoped lang="scss">
@@ -149,5 +180,11 @@ const more = (id: string, label: string) => {
 	&.hid {
 		display: none;
 	}
+}
+.empt {
+	border-left: 3px solid transparent;
+}
+.visib {
+	border-left: 3px solid $accent;
 }
 </style>
