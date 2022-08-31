@@ -9,7 +9,7 @@
 		template(v-else v-for="(version, index) in filtered" :key="version.id")
 			.version(:id="version.ver")
 				.row.items-center
-					q-btn( dense unelevated icon="mdi-source-branch" color="accent" @click="test").q-mr-md
+					q-btn( dense unelevated icon="mdi-source-branch" color="accent" @click="test(version)").q-mr-md
 					div {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
@@ -37,8 +37,8 @@
 							.text
 								component(:is="WordHighlighter" :query="filter") {{el.text}}
 								br
-								q-btn(v-if="el.more" unelevated color="accent" label="Еще" size="xs" @click="el.show = !el.show")
-						.more(v-if="el.more && el.show")
+								q-btn(v-if="el.more" unelevated color="accent" label="Еще" size="xs" @click="more(item.id, el.label)")
+						.more.hid(:id="setId(item.id, el.label)" v-if="el.more")
 							div(v-html="el.more")
 							div Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.
 							q-img(src="https://picsum.photos/id/103/600/300")
@@ -103,8 +103,14 @@ const handleClick = (e: any, version: any) => {
 		myitems.toggleAll()
 	} else myitems.expandBlock(version)
 }
-const test = () => {
-	console.log(filtered.value)
+
+const setId = (id: string, label: string) => {
+	return id + label
+}
+
+const more = (id: string, label: string) => {
+	let el = document.getElementById(id + label)
+	el?.classList.toggle('hid')
 }
 </script>
 
@@ -140,5 +146,8 @@ const test = () => {
 .more {
 	font-size: 1.1rem;
 	margin-left: 4rem;
+	&.hid {
+		display: none;
+	}
 }
 </style>
