@@ -9,8 +9,9 @@
 		template(v-else v-for="(version, index) in filtered" :key="version.id")
 			.version(:id="version.ver")
 				.row.items-center
-					q-btn( dense unelevated icon="mdi-source-branch" color="accent").q-mr-md
-					div {{version.ver}}
+					q-btn( dense unelevated icon="mdi-source-branch" color="accent" :disabled="index == 0").q-mr-md
+						q-tooltip(anchor="top middle" self="bottom middle") Скачать
+					div(:class="{link : index !== 0}") {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
 					q-btn(v-if="filter.length < 1" dense flat round
@@ -186,5 +187,12 @@ const calcClass = (e: string) => {
 }
 .visib {
 	border-left: 3px solid $accent;
+}
+.link {
+	cursor: pointer;
+	color: $accent;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 </style>
