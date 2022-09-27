@@ -4,32 +4,32 @@
 		.zg Release notes
 		template(v-if="filtered.length === 0")
 			.notfound
-				q-icon(name="mdi-emoticon-cry-outline" size="md").q-mr-md
+				SvgIcon(name="emoticon-cry-outline").q-mr-md
 				span Ничего нет. Попробуйте изменить запрос.
 		template(v-else v-for="(version, index) in filtered" :key="version.id")
 			.version(:id="version.ver")
 				.row.items-center
-					q-btn( dense unelevated icon="mdi-source-branch" color="accent" v-if="index !== 0").q-mr-md
-						q-tooltip(anchor="top middle" self="bottom middle") Скачать
+					q-btn( dense unelevated color="accent" v-if="index !== 0").q-mr-md
+						SvgIcon(name="source-branch" color="white")
 					div(:class="{link : index !== 0}") {{version.ver}}
 				.row.items-center.q-pr-sm
 					.date(v-if="index !== 0").q-mr-lg 23.07.2022
 					q-btn(v-if="filter.length < 1" dense flat round
 						color="accent"
-						icon="mdi-unfold-more-horizontal"
 						@click="handleClick($event, version)" )
 						q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
+						SvgIcon(name="unfold-more-horizontal")
 
 			q-list(v-intersection="intersectionObject" :id="version.ver")
 				q-expansion-item(v-for="(item) in version.children"
 					:key="item.id"
 					:label="item.head"
 					header-class="hd"
-					:icon="item.icon"
+					:icon="showIcon(item.icon)"
 					expand-separator
+					expand-icon="img:/chevron-down.svg"
 					:model-value="item.model"
-					@click="myitems.toggleModel(item)"
-					)
+					@click="myitems.toggleModel(item)")
 
 					q-card-section(v-for="el in item.children" :key="el.label")
 						.smallgrid
@@ -42,12 +42,11 @@
 						.more.hid(:id="setId(item.id, el.label)" v-if="el.more")
 							div(v-html="el.more")
 							div Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.
-							q-img(src="https://picsum.photos/id/103/600/300")
 
 	.side
-		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable @clear="filter = ''")
+		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/close-circle-outline.svg" @clear="filter = ''")
 			template(v-slot:prepend)
-				q-icon(name="mdi-magnify")
+				SvgIcon(name="magnify").magnify
 		br
 		.sod Содержание
 		.list
@@ -61,6 +60,7 @@ import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
 import { useItems } from '@/stores/items'
 import type { Ref } from 'vue'
+import SvgIcon from '@/components/SvgIcon.vue'
 
 const inView: Ref<String[]> = ref([])
 
@@ -144,6 +144,9 @@ const calcClass = (e: string) => {
 		return 'visib'
 	} else return ''
 }
+const showIcon = (icon: string) => {
+	return 'img:/' + icon + '.svg'
+}
 </script>
 
 <style scoped lang="scss">
@@ -170,6 +173,7 @@ const calcClass = (e: string) => {
 	font-style: italic;
 }
 .notfound {
+	margin-top: 3rem;
 	padding: 1rem;
 	border: 1px solid pink;
 	background: $pink-1;
@@ -194,5 +198,15 @@ const calcClass = (e: string) => {
 	&:hover {
 		text-decoration: underline;
 	}
+}
+.myrow {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background: #eee;
+}
+.magnify {
+	width: 22px;
 }
 </style>

@@ -1,13 +1,13 @@
 import { createApp } from 'vue'
-import { Quasar, Notify, LocalStorage } from 'quasar'
-import '@quasar/extras/roboto-font/roboto-font.css'
-import '@quasar/extras/mdi-v6/mdi-v6.css'
-import '@quasar/extras/material-icons/material-icons.css'
+import { Quasar } from 'quasar'
+// import '@quasar/extras/roboto-font/roboto-font.css'
+// import '@quasar/extras/mdi-v6/mdi-v6.css'
+// import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 import '@/assets/styles/main.scss'
-import { router } from '@/router/router'
+// import { router } from '@/router/router'
 import 'virtual:svg-icons-register'
-import VueClickAway from 'vue3-click-away'
+// import VueClickAway from 'vue3-click-away'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -16,20 +16,7 @@ const pinia = createPinia()
 const app = createApp(App)
 
 app.use(Quasar, {
-	plugins: {
-		Notify,
-		LocalStorage,
-	}, // import Quasar plugins and add here
-	config: {
-		notify: {
-			// type: 'warning',
-			position: 'bottom-right',
-			timeout: 3000,
-			icon: 'mdi-alert',
-			color: 'primary',
-			classes: 'notific',
-		},
-	},
+	plugins: {}, // import Quasar plugins and add here
 	supportTS: {
 		tsCheckerConfig: {
 			eslint: {
@@ -39,7 +26,7 @@ app.use(Quasar, {
 		},
 	},
 })
-app.use(router)
-app.use(VueClickAway)
+// app.use(router)
+// app.use(VueClickAway)
 app.use(pinia)
 app.mount('#app')
