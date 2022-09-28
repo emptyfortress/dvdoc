@@ -27,7 +27,7 @@
 					header-class="hd"
 					:icon="showIcon(item.icon)"
 					expand-separator
-					expand-icon="img:/chevron-down.svg"
+					expand-icon="img:/img/chevron-down.svg"
 					:model-value="item.model"
 					@click="myitems.toggleModel(item)")
 
@@ -145,7 +145,7 @@ const calcClass = (e: string) => {
 	} else return ''
 }
 const showIcon = (icon: string) => {
-	return 'img:/' + icon + '.svg'
+	return 'img:/img/' + icon + '.svg'
 }
 </script>
 
