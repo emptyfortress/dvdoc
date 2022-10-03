@@ -1,28 +1,28 @@
 <template lang="pug">
 .grid
 	.left
-		template(v-if="filtered.length === 0")
-			.notfound Ничего нет. Попробуйте изменить запрос.
-		template(v-else v-for="version in filtered" :key="version.id")
-			.version(:id="version.ver")
+		//- template(v-if="filtered.length === 0")
+		//- 	.notfound Ничего нет. Попробуйте изменить запрос.
+		template(v-for="item in fuck" :key="item.id")
+			.version(:id="item.fileVersion")
 				.row.items-center
-					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
-						SvgIcon(name="source-branch" color="white")
-					div(:class="{link : version.metadata.isPublic}")
-						span(v-if="version.metadata.isPublic") {{version.fileVersion}}
+					q-btn( dense unelevated color="accent" v-if="item.metadata.isPublic === true").q-mr-md
+						component(:is="SvgIcon" name="source-branch" color="white")
+					div(:class="{link : item.metadata.isPublic}")
+						span(v-if="item.metadata.isPublic === true") {{item.fileVersion}}
 						span(v-else) Войдет в следующую версию
 
 				.row.items-center.q-pr-sm
 					.date.q-mr-lg
-						span(v-if="version.metadata.publishDate") {{version.metadata.publishDate.split('T')[0]}}
+						span(v-if="item.metadata.publishDate") {{item.metadata.publishDate.split('T')[0]}}
 						span(v-else) -- | --
 					q-btn(v-if="filter.length < 1" dense flat round
 						color="accent"
-						@click="handleClick($event, version)" )
+						@click="handleClick($event, item)" )
 						q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
-						SvgIcon(name="unfold-more-horizontal")
-			p {{ version }}
-			p {{ version.changes.length }}
+						component(:is="SvgIcon" name="unfold-more-horizontal")
+			p {{ item }}
+			p {{ item.children.length }}
 
 			//- q-list(v-intersection="intersectionObject" :id="version.id")
 
@@ -49,13 +49,13 @@
 			//- 				div Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.
 
 	.side
-		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/img/close-circle-outline.svg" @clear="filter = ''")
+		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/img/close-circle-outline.svg" @clear="clear")
 			template(v-slot:prepend)
 				SvgIcon(name="magnify").magnify
 		br
 		.sod Содержание
 		.list
-			.empt(v-for="item in filtered" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.fileVersion)") {{item.fileVersion}}
+			.empt(v-for="item in fuck" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.fileVersion)") {{item.fileVersion}}
 </template>
 
 <script setup lang="ts">
@@ -92,10 +92,13 @@ const intersectionObject = {
 	},
 }
 const myitems = useItems()
-// myitems.setVersions(versions)
 
 const { getScrollTarget, setVerticalScrollPosition } = scroll
 const filter = ref('')
+const clear = () => {
+	filter.value = ''
+	console.log(myitems.versions)
+}
 
 const handleScroll = (e: string) => {
 	const ele = document.getElementById(e) // You need to get your element here
@@ -118,9 +121,6 @@ const filterByLabel = (array: any, searchTerm: string) => {
 }
 
 const filtered = computed(() => {
-	if (filter.value !== '') {
-		return filterByLabel(myitems.versions, filter.value)
-	}
 	return myitems.versions
 })
 
@@ -152,6 +152,8 @@ const showIcon = (icon: string) => {
 	return 'img:/img/' + icon + '.svg'
 }
 
+const fuck = ref([])
+
 onBeforeMount(() => {
 	// GET request using fetch with error handling
 	fetch('https://vzhik.digdes.com/api/changelog/tree/1')
@@ -165,22 +167,21 @@ onBeforeMount(() => {
 				return Promise.reject(error)
 			}
 
-			let data1 = [] as Version[]
+			// let data1 = [] as Version[]
 
-			data.forEach((item: Version) => {
-				let temp = {} as Version
-				temp.id = item.id
-				temp.fileVersion = item.fileVersion
-				temp.metadata = {} as Metadata
-				Object.assign(temp.metadata, item.metadata)
-				// temp.changes = [...item.changes]
-				temp.changes = []
+			// data.forEach((item: Version) => {
+			// 	let temp = {} as Version
+			// 	temp.id = item.id
+			// 	temp.fileVersion = item.fileVersion
+			// 	temp.metadata = {} as Metadata
+			// 	Object.assign(temp.metadata, item.metadata)
+			// 	temp.children = []
 
-				data1.push(temp)
-			})
-			myitems.setVersions(data)
-			console.log('data1: ', data1)
-			console.log('data: ', data)
+			// 	data1.push(temp)
+			// })
+			// myitems.setVersions(data1)
+			// console.log('filtered', filtered.value)
+			fuck.value = data
 		})
 		.catch((error) => {
 			console.error('There was an error!', error)

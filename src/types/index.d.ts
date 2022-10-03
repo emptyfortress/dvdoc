@@ -1,21 +1,23 @@
-interface Node {
+interface ErrGroup {
 	id: string
 	head: string
 	icon: string
 	model: boolean
-	children: Err[]
+	changes: Err[]
 }
 
 interface Err {
 	id: string
-	label: string
-	text: string
+	title: string
+	description: string
+	detailed: string
 }
 
 interface Metadata {
 	isPublic: boolean
 	downloadLink?: string
-	publishDate: Date
+	publishDate?: string
+	bildId?: number
 }
 
 interface Changes {

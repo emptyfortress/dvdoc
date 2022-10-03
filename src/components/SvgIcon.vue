@@ -1,5 +1,5 @@
 <template>
-	<svg aria-hidden="true" class="icon" :class="{ 'icon-spin': spin }">
+	<svg aria-hidden="true" class="q-icon">
 		<use :href="symbolId" :fill="color" />
 	</svg>
 </template>
@@ -35,28 +35,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-svg.icon {
+svg.q-icon {
 	width: 1.5em;
 	height: 1.5em;
 	vertical-align: middle;
 	margin-bottom: 0.125em;
 	// margin-right: 0.5em;
 	fill: #666;
-}
-body.body--dark svg.icon {
-	fill: #ab9073;
-}
-
-svg.icon-spin {
-	animation: icon-spin 2s infinite linear;
-}
-
-@keyframes icon-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(359deg);
-	}
 }
 </style>
