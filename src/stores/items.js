@@ -39,7 +39,6 @@ export const useItems = defineStore({
 		},
 		toggleMore(item) {
 			item.show = !item.show
-			console.log(item)
 		},
 		toggleAll() {
 			this.versions = this.versions.map((item) => {

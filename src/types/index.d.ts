@@ -10,3 +10,23 @@ interface Node {
 	descr: string
 	doveritel: string
 }
+
+interface Metadata {
+	isPublic: boolean
+	downloadLink?: string
+	publishDate: Date
+}
+
+interface Changes {
+	type: string
+	title: string
+	description: string
+	detailed: string
+}
+
+interface Version {
+	id: number
+	fileVersion: string
+	metadata: Metadata
+	changes: Changes
+}

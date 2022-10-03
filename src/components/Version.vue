@@ -4,24 +4,29 @@
 		.zg Release notes
 		template(v-if="filtered.length === 0")
 			.notfound
-				SvgIcon(name="emoticon-cry-outline").q-mr-md
 				span Ничего нет. Попробуйте изменить запрос.
-		template(v-else v-for="(version, index) in filtered" :key="version.id")
-			.version(:id="version.ver")
+		template(v-else v-for="version in filtered" :key="version.id")
+			.version(:id="version.id")
 				.row.items-center
-					q-btn( dense unelevated color="accent" v-if="index !== 0").q-mr-md
+					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
 						SvgIcon(name="source-branch" color="white")
-					div(:class="{link : index !== 0}") {{version.ver}}
+					div(:class="{link : version.metadata.isPublic}")
+						span(v-if="version.metadata.isPublic") {{version.fileVersion}}
+						span(v-else) Войдет в следующую версию
+
 				.row.items-center.q-pr-sm
-					.date(v-if="index !== 0").q-mr-lg 23.07.2022
+					.date.q-mr-lg
+						span(v-if="version.metadata.publishDate") {{version.metadata.publishDate.split('T')[0]}}
+						span(v-else) -- | --
 					q-btn(v-if="filter.length < 1" dense flat round
 						color="accent"
 						@click="handleClick($event, version)" )
 						q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
 						SvgIcon(name="unfold-more-horizontal")
 
-			q-list(v-intersection="intersectionObject" :id="version.ver")
-				q-expansion-item(v-for="(item) in version.children"
+			q-list(v-intersection="intersectionObject" :id="version.id")
+
+				q-expansion-item(v-for="(item) in version.changes"
 					:key="item.id"
 					:label="item.head"
 					header-class="hd"
@@ -44,21 +49,21 @@
 							div Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.
 
 	.side
-		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/close-circle-outline.svg" @clear="filter = ''")
+		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/img/close-circle-outline.svg" @clear="filter = ''")
 			template(v-slot:prepend)
 				SvgIcon(name="magnify").magnify
 		br
 		.sod Содержание
 		.list
-			.empt(v-for="item in filtered" @click="handleScroll(item.ver)" :key="item.ver" :class="calcClass(item.ver)") {{item.ver}}
+			.empt(v-for="item in filtered" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.fileVersion)") {{item.fileVersion}}
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue'
-import { versions } from '@/stores/data'
+import { ref, computed, onBeforeMount, watchEffect } from 'vue'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
 import { useItems } from '@/stores/items'
+import { versions } from '@/stores/data'
 import type { Ref } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 
@@ -147,6 +152,35 @@ const calcClass = (e: string) => {
 const showIcon = (icon: string) => {
 	return 'img:/img/' + icon + '.svg'
 }
+
+onBeforeMount(() => {
+	// GET request using fetch with error handling
+	fetch('https://vzhik.digdes.com/api/changelog/tree/1')
+		.then(async (response) => {
+			const data = await response.json()
+
+			// check for error response
+			if (!response.ok) {
+				// get error message from body or default to response statusText
+				const error = (data && data.message) || response.statusText
+				return Promise.reject(error)
+			}
+
+			let data1 = [] as Version[]
+
+			data.forEach((item: Version) => {
+				let temp = {} as Version
+				temp.id = item.id
+				temp.fileVersion = item.fileVersion
+				data1.push(temp)
+			})
+			myitems.setVersions(data)
+			console.log('data1: ', data1)
+		})
+		.catch((error) => {
+			console.error('There was an error!', error)
+		})
+})
 </script>
 
 <style scoped lang="scss">
