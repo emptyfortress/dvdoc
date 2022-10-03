@@ -1,12 +1,11 @@
 <template lang="pug">
 .grid
 	.left
-		.zg Release notes
+		//- .zg Release notes
 		template(v-if="filtered.length === 0")
-			.notfound
-				span Ничего нет. Попробуйте изменить запрос.
-		template(v-else v-for="version in filtered" :key="version.id")
-			.version(:id="version.id")
+			.notfound Ничего нет. Попробуйте изменить запрос.
+		template(v-else v-for="(version, index) in filtered" :key="version.id")
+			.version(:id="version.ver")
 				.row.items-center
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
 						SvgIcon(name="source-branch" color="white")

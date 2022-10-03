@@ -1,27 +1,25 @@
-// @import './animation.scss';
-
 .pad {
 	padding: 2rem;
 }
-.zag {
-	font-size: 1.8rem;
-}
-.zg {
-	font-size: 2.3rem;
-	margin-bottom: 1.5rem;
-}
-p,
-ul,
-ol {
-	font-size: 1.1rem;
-}
+// .zag {
+// 	font-size: 1.8rem;
+// }
+// .zg {
+// 	font-size: 2.3rem;
+// 	margin-bottom: 1.5rem;
+// }
+// p,
+// ul,
+// ol {
+// 	font-size: 1.1rem;
+// }
 
 .rel {
 	position: relative;
 }
 .side {
 	position: fixed;
-	top: 120px;
+	top: 60px;
 	right: 10px;
 	min-width: 300px;
 	padding: 1rem;
@@ -83,7 +81,7 @@ ol {
 }
 .text ul,
 .text ol {
-	font-size: 1rem;
+	// font-size: 1rem;
 	margin: 0;
 	padding: 0;
 	li {
