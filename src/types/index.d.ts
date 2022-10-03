@@ -1,14 +1,15 @@
 interface Node {
 	id: string
-	label: string
-	typ: number
+	head: string
 	icon: string
-	header?: string
-	children: Node[]
-	code: string
-	name: string
-	descr: string
-	doveritel: string
+	model: boolean
+	children: Err[]
+}
+
+interface Err {
+	id: string
+	label: string
+	text: string
 }
 
 interface Metadata {
@@ -28,5 +29,5 @@ interface Version {
 	id: number
 	fileVersion: string
 	metadata: Metadata
-	changes: Changes
+	changes: Changes[]
 }

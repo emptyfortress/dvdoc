@@ -1,10 +1,9 @@
 <template lang="pug">
 .grid
 	.left
-		//- .zg Release notes
 		template(v-if="filtered.length === 0")
 			.notfound Ничего нет. Попробуйте изменить запрос.
-		template(v-else v-for="(version, index) in filtered" :key="version.id")
+		template(v-else v-for="version in filtered" :key="version.id")
 			.version(:id="version.ver")
 				.row.items-center
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
@@ -22,30 +21,32 @@
 						@click="handleClick($event, version)" )
 						q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
 						SvgIcon(name="unfold-more-horizontal")
+			p {{ version }}
+			p {{ version.changes.length }}
 
-			q-list(v-intersection="intersectionObject" :id="version.id")
+			//- q-list(v-intersection="intersectionObject" :id="version.id")
 
-				q-expansion-item(v-for="(item) in version.changes"
-					:key="item.id"
-					:label="item.head"
-					header-class="hd"
-					:icon="showIcon(item.icon)"
-					expand-separator
-					expand-icon="img:/img/chevron-down.svg"
-					:model-value="item.model"
-					@click="myitems.toggleModel(item)")
+			//- 	q-expansion-item(v-for="(item) in version.changes"
+			//- 		:key="item.id"
+			//- 		:label="item.head"
+			//- 		header-class="hd"
+			//- 		:icon="showIcon(item.icon)"
+			//- 		expand-separator
+			//- 		expand-icon="img:/img/chevron-down.svg"
+			//- 		:model-value="item.model"
+			//- 		@click="myitems.toggleModel(item)")
 
-					q-card-section(v-for="el in item.children" :key="el.label")
-						.smallgrid
-							.label
-								component(:is="WordHighlighter" :query="filter") {{el.label}}
-							.text
-								component(:is="WordHighlighter" :query="filter") {{el.text}}
-								br
-								q-btn(v-if="el.more" unelevated color="accent" label="Еще" size="xs" @click="more(item.id, el.label)")
-						.more.hid(:id="setId(item.id, el.label)" v-if="el.more")
-							div(v-html="el.more")
-							div Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.
+			//- 		q-card-section(v-for="el in item.children" :key="el.label")
+			//- 			.smallgrid
+			//- 				.label
+			//- 					component(:is="WordHighlighter" :query="filter") {{el.label}}
+			//- 				.text
+			//- 					component(:is="WordHighlighter" :query="filter") {{el.text}}
+			//- 					br
+			//- 					q-btn(v-if="el.more" unelevated color="accent" label="Еще" size="xs" @click="more(item.id, el.label)")
+			//- 			.more.hid(:id="setId(item.id, el.label)" v-if="el.more")
+			//- 				div(v-html="el.more")
+			//- 				div Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.
 
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/img/close-circle-outline.svg" @clear="filter = ''")
@@ -62,7 +63,6 @@ import { ref, computed, onBeforeMount, watchEffect } from 'vue'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
 import { useItems } from '@/stores/items'
-import { versions } from '@/stores/data'
 import type { Ref } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 
@@ -92,7 +92,7 @@ const intersectionObject = {
 	},
 }
 const myitems = useItems()
-myitems.setVersions(versions)
+// myitems.setVersions(versions)
 
 const { getScrollTarget, setVerticalScrollPosition } = scroll
 const filter = ref('')
@@ -171,10 +171,16 @@ onBeforeMount(() => {
 				let temp = {} as Version
 				temp.id = item.id
 				temp.fileVersion = item.fileVersion
+				temp.metadata = {} as Metadata
+				Object.assign(temp.metadata, item.metadata)
+				// temp.changes = [...item.changes]
+				temp.changes = []
+
 				data1.push(temp)
 			})
 			myitems.setVersions(data)
 			console.log('data1: ', data1)
+			console.log('data: ', data)
 		})
 		.catch((error) => {
 			console.error('There was an error!', error)
@@ -187,15 +193,6 @@ onBeforeMount(() => {
 	margin-left: 4rem;
 	display: grid;
 	grid-template-columns: 260px 1fr;
-	column-gap: 1rem;
-	font-size: 1rem;
-	line-height: 120%;
-	margin-bottom: 1rem;
-}
-.smallgrid1 {
-	margin-left: 4rem;
-	display: grid;
-	grid-template-columns: 130px 1fr;
 	column-gap: 1rem;
 	font-size: 1rem;
 	line-height: 120%;
