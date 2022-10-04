@@ -27,7 +27,7 @@ onBeforeMount(() => {
 					{
 						id: 0,
 						head: 'Функциональные изменения',
-						icon: 'alert',
+						icon: 'briefcase-outline',
 						model: false,
 						type: 'functional',
 						children: [],
@@ -35,7 +35,7 @@ onBeforeMount(() => {
 					{
 						id: 1,
 						head: 'Изменения в библиотеках элементов управления',
-						icon: 'alert',
+						icon: 'code-json',
 						model: false,
 						type: 'lib',
 						children: [],
@@ -43,7 +43,7 @@ onBeforeMount(() => {
 					{
 						id: 2,
 						head: 'Оптимизации',
-						icon: 'alert',
+						icon: 'rocket-launch',
 						model: false,
 						type: 'optimization',
 						children: [],

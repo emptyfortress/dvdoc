@@ -19,44 +19,27 @@ export const useItems = defineStore({
 		toggleModel(item: Children) {
 			item.model = !item.model
 		},
-		expandAll() {
-			// this.versions = this.versions.map((item) => {
-			// 	return {
-			// 		id: item.id,
-			// 		ver: item.ver,
-			// 		children: item.children?.map((el) => {
-			// 			return {
-			// 				id: el.id,
-			// 				head: el.head,
-			// 				label: el.label,
-			// 				icon: el.icon,
-			// 				model: true,
-			// 				children: el.children,
-			// 			}
-			// 		}),
-			// 	}
-			// })
-		},
 		toggleMore(item: any) {
 			item.show = !item.show
 		},
 		toggleAll() {
-			// this.versions = this.versions.map((item) => {
-			// 	return {
-			// 		id: item.id,
-			// 		ver: item.ver,
-			// 		children: item.children?.map((el) => {
-			// 			return {
-			// 				id: el.id,
-			// 				head: el.head,
-			// 				label: el.label,
-			// 				icon: el.icon,
-			// 				model: !el.model,
-			// 				children: el.children,
-			// 			}
-			// 		}),
-			// 	}
-			// })
+			this.versions = this.versions.map((item) => {
+				return {
+					id: item.id,
+					fileVersion: item.fileVersion,
+					metadata: item.metadata,
+					children: item.children?.map((el) => {
+						return {
+							id: el.id,
+							head: el.head,
+							icon: el.icon,
+							model: !el.model,
+							type: el.type,
+							children: el.children,
+						}
+					}),
+				}
+			})
 		},
 	},
 })

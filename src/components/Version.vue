@@ -4,26 +4,18 @@
 		template(v-if="filtered.length === 0")
 			.notfound Ничего нет. Попробуйте изменить запрос.
 		template(v-for="version in filtered" :key="version.id")
+			//- p {{version}}
 			.version(:id="version.fileVersion")
 				.row.items-center
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
 						component(:is="SvgIcon" name="source-branch" color="white")
-					div(:class="{link : version.metadata.isPublic}")
+					div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(item)")
 						span(v-if="version.metadata.isPublic === true") {{version.fileVersion}}
 						span(v-else) Войдет в следующую версию
 
-				.row.items-center.q-pr-sm
-					.date.q-mr-lg
-						span(v-if="version.metadata.publishDate") {{version.metadata.publishDate.split('T')[0]}}
-						span(v-else) -- | --
-					q-btn(v-if="filter.length < 1" dense flat round
-						color="accent"
-						@click="handleClick($event, version)" )
-						q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
-						component(:is="SvgIcon" name="unfold-more-horizontal")
+				component(:is="Dateblock" :filter="filter" :version="version")
 
 			q-list(v-intersection="intersectionObject" :id="version.id")
-
 				template(v-for="(item) in version.children")
 					q-expansion-item(v-if="item.children.length > 0"
 						:key="item.id"
@@ -63,6 +55,7 @@ import WordHighlighter from 'vue-word-highlighter'
 import { useItems } from '@/stores/items'
 import type { Ref } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
+import Dateblock from '@/components/Dateblock.vue'
 
 const inView: Ref<String[]> = ref([])
 
@@ -95,7 +88,6 @@ const { getScrollTarget, setVerticalScrollPosition } = scroll
 const filter = ref('')
 const clear = () => {
 	filter.value = ''
-	console.log(myitems.versions)
 }
 
 const handleScroll = (e: string) => {
@@ -127,11 +119,6 @@ watchEffect(() => {
 		myitems.expandAll()
 	}
 })
-const handleClick = (e: any, version: any) => {
-	if (e.shiftKey) {
-		myitems.toggleAll()
-	} else myitems.expandBlock(version)
-}
 
 const setId = (id: number, label: string) => {
 	return id + label
