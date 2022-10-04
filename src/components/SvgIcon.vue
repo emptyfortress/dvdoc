@@ -1,5 +1,5 @@
 <template>
-	<svg aria-hidden="true" class="q-icon">
+	<svg aria-hidden="true" class="m-icon">
 		<use :href="symbolId" :fill="color" />
 	</svg>
 </template>
@@ -35,7 +35,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-svg.q-icon {
+svg.m-icon {
 	width: 1.5em;
 	height: 1.5em;
 	vertical-align: middle;

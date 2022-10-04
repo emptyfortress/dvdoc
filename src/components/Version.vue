@@ -1,52 +1,50 @@
 <template lang="pug">
 .grid
 	.left
-		//- template(v-if="filtered.length === 0")
-		//- 	.notfound Ничего нет. Попробуйте изменить запрос.
-		template(v-for="item in fuck" :key="item.id")
-			.version(:id="item.fileVersion")
+		template(v-if="filtered.length === 0")
+			.notfound Ничего нет. Попробуйте изменить запрос.
+		template(v-for="version in filtered" :key="version.id")
+			.version(:id="version.fileVersion")
 				.row.items-center
-					q-btn( dense unelevated color="accent" v-if="item.metadata.isPublic === true").q-mr-md
+					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
 						component(:is="SvgIcon" name="source-branch" color="white")
-					div(:class="{link : item.metadata.isPublic}")
-						span(v-if="item.metadata.isPublic === true") {{item.fileVersion}}
+					div(:class="{link : version.metadata.isPublic}")
+						span(v-if="version.metadata.isPublic === true") {{version.fileVersion}}
 						span(v-else) Войдет в следующую версию
 
 				.row.items-center.q-pr-sm
 					.date.q-mr-lg
-						span(v-if="item.metadata.publishDate") {{item.metadata.publishDate.split('T')[0]}}
+						span(v-if="version.metadata.publishDate") {{version.metadata.publishDate.split('T')[0]}}
 						span(v-else) -- | --
 					q-btn(v-if="filter.length < 1" dense flat round
 						color="accent"
-						@click="handleClick($event, item)" )
+						@click="handleClick($event, version)" )
 						q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
 						component(:is="SvgIcon" name="unfold-more-horizontal")
-			p {{ item }}
-			p {{ item.children.length }}
 
-			//- q-list(v-intersection="intersectionObject" :id="version.id")
+			q-list(v-intersection="intersectionObject" :id="version.id")
 
-			//- 	q-expansion-item(v-for="(item) in version.changes"
-			//- 		:key="item.id"
-			//- 		:label="item.head"
-			//- 		header-class="hd"
-			//- 		:icon="showIcon(item.icon)"
-			//- 		expand-separator
-			//- 		expand-icon="img:/img/chevron-down.svg"
-			//- 		:model-value="item.model"
-			//- 		@click="myitems.toggleModel(item)")
+				template(v-for="(item) in version.children")
+					q-expansion-item(v-if="item.children.length > 0"
+						:key="item.id"
+						:label="item.head"
+						header-class="hd"
+						:icon="showIcon(item.icon)"
+						expand-separator
+						expand-icon="img:/img/chevron-down.svg"
+						:model-value="item.model"
+						@click="myitems.toggleModel(item)")
 
-			//- 		q-card-section(v-for="el in item.children" :key="el.label")
-			//- 			.smallgrid
-			//- 				.label
-			//- 					component(:is="WordHighlighter" :query="filter") {{el.label}}
-			//- 				.text
-			//- 					component(:is="WordHighlighter" :query="filter") {{el.text}}
-			//- 					br
-			//- 					q-btn(v-if="el.more" unelevated color="accent" label="Еще" size="xs" @click="more(item.id, el.label)")
-			//- 			.more.hid(:id="setId(item.id, el.label)" v-if="el.more")
-			//- 				div(v-html="el.more")
-			//- 				div Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.
+						q-card-section(v-for="el in item.children" :key="el.title")
+							.smallgrid
+								.label
+									component(:is="WordHighlighter" :query="filter") {{el.title}}
+								.text
+									component(:is="WordHighlighter" :query="filter") {{el.description}}
+									br
+									q-btn(v-if="el.detailed" unelevated color="accent" label="Еще" size="xs" @click="more(item.id, el.title)")
+							.more.hid(:id="setId(item.id, el.title)" v-if="el.detailed")
+								div(v-html="el.detailed")
 
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/img/close-circle-outline.svg" @clear="clear")
@@ -55,11 +53,11 @@
 		br
 		.sod Содержание
 		.list
-			.empt(v-for="item in fuck" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.fileVersion)") {{item.fileVersion}}
+			.empt(v-for="item in myitems.versions" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.fileVersion)") {{item.fileVersion}}
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onBeforeMount, watchEffect } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
 import { useItems } from '@/stores/items'
@@ -135,11 +133,11 @@ const handleClick = (e: any, version: any) => {
 	} else myitems.expandBlock(version)
 }
 
-const setId = (id: string, label: string) => {
+const setId = (id: number, label: string) => {
 	return id + label
 }
 
-const more = (id: string, label: string) => {
+const more = (id: number, label: string) => {
 	let el = document.getElementById(id + label)
 	el?.classList.toggle('hid')
 }
@@ -151,42 +149,6 @@ const calcClass = (e: string) => {
 const showIcon = (icon: string) => {
 	return 'img:/img/' + icon + '.svg'
 }
-
-const fuck = ref([])
-
-onBeforeMount(() => {
-	// GET request using fetch with error handling
-	fetch('https://vzhik.digdes.com/api/changelog/tree/1')
-		.then(async (response) => {
-			const data = await response.json()
-
-			// check for error response
-			if (!response.ok) {
-				// get error message from body or default to response statusText
-				const error = (data && data.message) || response.statusText
-				return Promise.reject(error)
-			}
-
-			// let data1 = [] as Version[]
-
-			// data.forEach((item: Version) => {
-			// 	let temp = {} as Version
-			// 	temp.id = item.id
-			// 	temp.fileVersion = item.fileVersion
-			// 	temp.metadata = {} as Metadata
-			// 	Object.assign(temp.metadata, item.metadata)
-			// 	temp.children = []
-
-			// 	data1.push(temp)
-			// })
-			// myitems.setVersions(data1)
-			// console.log('filtered', filtered.value)
-			fuck.value = data
-		})
-		.catch((error) => {
-			console.error('There was an error!', error)
-		})
-})
 </script>
 
 <style scoped lang="scss">
@@ -197,7 +159,7 @@ onBeforeMount(() => {
 	column-gap: 1rem;
 	font-size: 1rem;
 	line-height: 120%;
-	margin-bottom: 1rem;
+	// margin-bottom: 1rem;
 }
 .label {
 	font-weight: 500;
