@@ -45,7 +45,8 @@
 		br
 		.sod Содержание
 		.list
-			.empt(v-for="item in myitems.versions" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.fileVersion)") {{item.fileVersion}}
+			.empt(v-for="item in myitems.versions" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.id)") {{item.fileVersion}}
+		p {{inView}}
 </template>
 
 <script setup lang="ts">
@@ -129,7 +130,7 @@ const more = (id: number, label: string) => {
 	el?.classList.toggle('hid')
 }
 const calcClass = (e: string) => {
-	if (inView.value.some((el) => el === e)) {
+	if (inView.value.some((el) => el == e)) {
 		return 'visib'
 	} else return ''
 }
