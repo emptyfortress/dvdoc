@@ -27,18 +27,18 @@ const randomNumber = (min: number, max: number, fixed: number) => {
 // 		.concat(children.length ? getMembers(children) : children)
 // }
 
-function getNodeFromTree(node: Node, nodeId: string): Node | null {
-	if (node.id == nodeId) {
-		return node
-	} else if (node.children != null) {
-		var result = null
-		for (let i = 0; result == null && i < node.children.length; i++) {
-			result = getNodeFromTree(node.children[i], nodeId)
-		}
-		return result
-	}
-	return null
-}
+// function getNodeFromTree(node: Node, nodeId: string): Node | null {
+// 	if (node.id == nodeId) {
+// 		return node
+// 	} else if (node.children != null) {
+// 		var result = null
+// 		for (let i = 0; result == null && i < node.children.length; i++) {
+// 			result = getNodeFromTree(node.children[i], nodeId)
+// 		}
+// 		return result
+// 	}
+// 	return null
+// }
 
 function deleteNodeFromTree<T extends { id: string; children: T[] }>(node: T, nodeId: string) {
 	if (node.children != null) {
@@ -71,7 +71,7 @@ export {
 	randomArray,
 	randomNumber,
 	// getMembers,
-	getNodeFromTree,
+	// getNodeFromTree,
 	deleteNodeFromTree,
 	insertNodeIntoTree,
 }
