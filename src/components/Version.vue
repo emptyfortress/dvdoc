@@ -47,6 +47,7 @@
 			.empt(v-for="item in myitems.versions" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.id)")
 				span(v-if="item.metadata.isPublic === true") {{item.fileVersion}}
 				span(v-else) Войдет в следующую версию
+		NotFound(:show="errorDialog" @close="errorDialog = false")
 </template>
 
 <script setup lang="ts">
@@ -57,6 +58,8 @@ import { useItems } from '@/stores/items'
 import type { Ref } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import Dateblock from '@/components/Dateblock.vue'
+import axios from 'axios'
+import NotFound from '@/components/NotFound.vue'
 
 const inView: Ref<String[]> = ref([])
 
@@ -139,6 +142,30 @@ const calcClass = (e: number) => {
 }
 const showIcon = (icon: string) => {
 	return 'img:/img/' + icon + '.svg'
+}
+const errorDialog = ref(false)
+const downloadItem = (e: Myversion) => {
+	const url = e.metadata.downloadLink
+	axios({
+		// url: 'http://localhost:3000/img/alert1.svg',
+		url: url,
+		method: 'GET',
+		responseType: 'blob',
+	})
+		.then((response: any) => {
+			var fileURL = window.URL.createObjectURL(new Blob([response.data]))
+			var fileLink = document.createElement('a')
+
+			fileLink.href = fileURL
+			fileLink.setAttribute('download', 'file.svg')
+			document.body.appendChild(fileLink)
+
+			fileLink.click()
+		})
+		.catch(() => {
+			console.log('File not found')
+			errorDialog.value = true
+		})
 }
 </script>
 

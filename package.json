@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.15.0",
+    "axios": "^1.0.0",
     "nanoid": "^3.3.4",
     "pinia": "^2.0.14",
     "quasar": "^2.7.5",

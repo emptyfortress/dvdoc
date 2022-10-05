@@ -4,9 +4,10 @@ import { ref, onBeforeMount } from 'vue'
 import { useItems } from '@/stores/items'
 
 const myitems = useItems()
+const apiUrl = 'https://vzhik.digdes.com/api/changelog/tree/1'
 
 onBeforeMount(() => {
-	fetch('https://vzhik.digdes.com/api/changelog/tree/1')
+	fetch(apiUrl)
 		.then(async (response) => {
 			const data = await response.json()
 
@@ -78,7 +79,7 @@ onBeforeMount(() => {
 			// items.value = data1
 		})
 		.catch((error) => {
-			console.error('There was an error!', error)
+			console.error('Ошибка получения данных с сервера', error)
 		})
 })
 </script>
