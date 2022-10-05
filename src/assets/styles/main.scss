@@ -1,18 +1,6 @@
 .pad {
 	padding: 2rem;
 }
-// .zag {
-// 	font-size: 1.8rem;
-// }
-// .zg {
-// 	font-size: 2.3rem;
-// 	margin-bottom: 1.5rem;
-// }
-// p,
-// ul,
-// ol {
-// 	font-size: 1.1rem;
-// }
 
 .rel {
 	position: relative;
@@ -40,6 +28,7 @@
 }
 .grid {
 	padding: 2rem;
+	padding-top: 0;
 	display: grid;
 	grid-template-columns: 1fr 300px;
 	gap: 1rem;
@@ -51,7 +40,7 @@
 	margin-top: 3rem;
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-tems: center;
 	.date {
 		font-size: 0.9rem;
 		color: grey;

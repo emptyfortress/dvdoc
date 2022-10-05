@@ -4,7 +4,7 @@ q-dialog(v-model="props.show")
 		q-card-section(horizontal)
 			q-card-section
 				component(:is="SvgIcon" name="alert" color="darkred").alert
-			q-card-section Архив с указанным релизом отсутствует. Обратитесь за помощью к администратору.
+			q-card-section Архив с указанным релизом отсутствует. Обратитесь за помощью к службу поддержки.
 		q-card-actions(align="center").q-pt-none
 			q-btn(flat color="accent" label="Закрыть" @click="close")
 

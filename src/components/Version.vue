@@ -1,5 +1,7 @@
 <template lang="pug">
 .grid
+	.zag Список накопительных изменений
+	div
 	.left
 		template(v-if="filtered.length === 0")
 			.notfound Ничего нет. Попробуйте изменить запрос.
@@ -8,9 +10,8 @@
 				.row.items-center
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
 						component(:is="SvgIcon" name="source-branch" color="white")
-					div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(version)")
-						span(v-if="version.metadata.isPublic === true") {{version.fileVersion}}
-						span(v-else) Войдет в следующую версию
+					div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(version)" v-if="version.metadata.isPublic === true") {{version.fileVersion}}
+					div(v-else) Войдет в следующую версию
 
 				component(:is="Dateblock" :filter="filter" :version="version")
 
@@ -219,5 +220,10 @@ const downloadItem = (e: Myversion) => {
 }
 .magnify {
 	width: 22px;
+}
+.zag {
+	padding: 2rem 0 0;
+	font-size: 2.25rem;
+	grid-column: 1/2;
 }
 </style>
