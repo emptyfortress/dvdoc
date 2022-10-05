@@ -4,12 +4,11 @@
 		template(v-if="filtered.length === 0")
 			.notfound Ничего нет. Попробуйте изменить запрос.
 		template(v-for="version in filtered" :key="version.id")
-			//- p {{version}}
 			.version(:id="version.fileVersion")
 				.row.items-center
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
 						component(:is="SvgIcon" name="source-branch" color="white")
-					div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(item)")
+					div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(version)")
 						span(v-if="version.metadata.isPublic === true") {{version.fileVersion}}
 						span(v-else) Войдет в следующую версию
 
@@ -45,8 +44,9 @@
 		br
 		.sod Содержание
 		.list
-			.empt(v-for="item in myitems.versions" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.id)") {{item.fileVersion}}
-		p {{inView}}
+			.empt(v-for="item in myitems.versions" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.id)")
+				span(v-if="item.metadata.isPublic === true") {{item.fileVersion}}
+				span(v-else) Войдет в следующую версию
 </template>
 
 <script setup lang="ts">
@@ -103,8 +103,8 @@ const filterByLabel = (array: any, searchTerm: string) => {
 	return array.reduce((prev: any, curr: any) => {
 		const children = curr.children ? filterByLabel(curr.children, searchTerm) : undefined
 
-		return curr.label?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			curr.text?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+		return curr.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			curr.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
 			children?.length > 0
 			? [...prev, { ...curr, children }]
 			: prev
@@ -112,6 +112,9 @@ const filterByLabel = (array: any, searchTerm: string) => {
 }
 
 const filtered = computed(() => {
+	if (filter.value.length > 1) {
+		return filterByLabel(myitems.versions, filter.value)
+	}
 	return myitems.versions
 })
 
@@ -129,8 +132,8 @@ const more = (id: number, label: string) => {
 	let el = document.getElementById(id + label)
 	el?.classList.toggle('hid')
 }
-const calcClass = (e: string) => {
-	if (inView.value.some((el) => el == e)) {
+const calcClass = (e: number) => {
+	if (inView.value.some((el) => el == e.toString())) {
 		return 'visib'
 	} else return ''
 }
