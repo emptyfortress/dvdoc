@@ -24,12 +24,6 @@ export const router = createRouter({
 			component: () => import('@/components/Version.vue'),
 			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Release notes'] },
 		},
-		{
-			path: '/test',
-			name: 'test',
-			component: () => import('@/components/Test.vue'),
-			meta: { title: 'Docsvision docs', bread: ['Web-client', 'Release notes'] },
-		},
 	],
 })
 
