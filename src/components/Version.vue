@@ -23,7 +23,7 @@
 						header-class="hd"
 						:icon="showIcon(item.icon)"
 						expand-separator
-						expand-icon="img:/img/chevron-down.svg"
+						expand-icon="img:/_/img/chevron-down.svg"
 						:model-value="item.model"
 						@click="myitems.toggleModel(item)")
 
@@ -39,7 +39,7 @@
 								div(v-html="el.detailed")
 
 	.side
-		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/img/close-circle-outline.svg" @clear="clear")
+		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/_/img/close-circle-outline.svg" @clear="clear")
 			template(v-slot:prepend)
 				SvgIcon(name="magnify").magnify
 		br
@@ -142,7 +142,7 @@ const calcClass = (e: number) => {
 	} else return ''
 }
 const showIcon = (icon: string) => {
-	return 'img:/img/' + icon + '.svg'
+	return 'img:/_/img/' + icon + '.svg'
 }
 const errorDialog = ref(false)
 const downloadItem = (e: Myversion) => {
