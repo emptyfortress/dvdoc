@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Version from './components/Version.vue'
+import Version from '@/components/Version.vue'
 import { onBeforeMount } from 'vue'
-import { useItems } from './stores/items'
+import { useItems } from '@/stores/items'
 
 const myitems = useItems()
 
