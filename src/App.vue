@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import Version from '@/components/Version.vue'
-import { ref, onBeforeMount } from 'vue'
+import { onBeforeMount } from 'vue'
 import { useItems } from '@/stores/items'
 
 const myitems = useItems()
-const apiUrl = 'https://vzhik.digdes.com/api/changelog/tree/1'
+
+const host = window.location.hostname
+const apiUrl = host + '/api/changelog/tree/1'
+// const apiUrl = 'https://vzhik.digdes.com/api/changelog/tree/1'
 
 onBeforeMount(() => {
 	fetch(apiUrl)
