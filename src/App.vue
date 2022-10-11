@@ -33,7 +33,7 @@ onBeforeMount(() => {
 						head: 'Функциональные изменения',
 						icon: 'briefcase-outline',
 						model: false,
-						type: 'functional',
+						type: 3,
 						children: [],
 					},
 					{
@@ -41,7 +41,7 @@ onBeforeMount(() => {
 						head: 'Изменения в библиотеках элементов управления',
 						icon: 'code-json',
 						model: false,
-						type: 'lib',
+						type: 4,
 						children: [],
 					},
 					{
@@ -49,7 +49,7 @@ onBeforeMount(() => {
 						head: 'Оптимизации',
 						icon: 'rocket-launch',
 						model: false,
-						type: 'optimization',
+						type: 2,
 						children: [],
 					},
 					{
@@ -57,24 +57,38 @@ onBeforeMount(() => {
 						head: 'Исправленные ошибки',
 						icon: 'alert',
 						model: false,
-						type: 'bugfix',
+						type: 1,
 						children: [] as Err[],
 					},
 				]
 				item.changes.forEach((change) => {
-					if (change.type === 'functional') {
+					if (change.type == 3) {
 						temp.children[0].children.push(change)
 					}
-					if (change.type === 'lib') {
+					if (change.type == 4) {
 						temp.children[1].children.push(change)
 					}
-					if (change.type === 'optimization') {
+					if (change.type == 2) {
 						temp.children[2].children.push(change)
 					}
-					if (change.type === 'bugfix') {
+					if (change.type == 1) {
 						temp.children[3].children.push(change)
 					}
 				})
+				// item.changes.forEach((change) => {
+				// 	if (change.type === 'functional') {
+				// 		temp.children[0].children.push(change)
+				// 	}
+				// 	if (change.type === 'lib') {
+				// 		temp.children[1].children.push(change)
+				// 	}
+				// 	if (change.type === 'optimization') {
+				// 		temp.children[2].children.push(change)
+				// 	}
+				// 	if (change.type === 'bugfix') {
+				// 		temp.children[3].children.push(change)
+				// 	}
+				// })
 
 				data1.push(temp)
 			})

@@ -1,15 +1,23 @@
+public enum ChangeType {
+	Draft, // 0, оно не будет приходить в ответе
+	Fix, // 1
+	Optimization, // 2
+	Functional, // 3
+	Lib, // 4
+}
+
 interface Children {
 	id: number
 	head: string
 	icon: string
 	model: boolean
-	type: string
+	type: ChangeType
 	children: Err[]
 }
 
 interface Err {
 	id: string
-	type: string
+	type: ChangeType
 	title: string
 	description: string
 	detailed: string
