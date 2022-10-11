@@ -55,13 +55,12 @@
 import { ref, computed, watchEffect } from 'vue'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
-// import { useItems } from '../stores/items'
-import { useItems } from './../stores/items'
+import { useItems } from '@/stores/items'
 import type { Ref } from 'vue'
-import SvgIcon from './SvgIcon.vue'
-import Dateblock from './Dateblock.vue'
+import SvgIcon from '@/components/SvgIcon.vue'
+import Dateblock from '@/components/Dateblock.vue'
 import axios from 'axios'
-import NotFound from './NotFound.vue'
+import NotFound from '@/components/NotFound.vue'
 
 const inView: Ref<String[]> = ref([])
 
