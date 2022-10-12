@@ -10,7 +10,8 @@
 				.row.items-center
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
 						component(:is="SvgIcon" name="source-branch" color="white")
-					div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(version)" v-if="version.metadata.isPublic === true") {{version.fileVersion}}
+					//- div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(version)" v-if="version.metadata.isPublic === true") {{version.fileVersion}}
+					a(:class="{link : version.metadata.isPublic}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true") {{version.fileVersion}}
 					div(v-else) Войдет в следующую версию
 
 				component(:is="Dateblock" :filter="filter" :version="version")
@@ -145,6 +146,7 @@ const showIcon = (icon: string) => {
 	return 'img:/_/img/' + icon + '.svg'
 }
 const errorDialog = ref(false)
+
 const downloadItem = (e: Myversion) => {
 	const url = e.metadata.downloadLink
 	axios({
