@@ -7,7 +7,7 @@ const myitems = useItems()
 
 const host = window.location.protocol + '//' + window.location.hostname
 const apiUrl = host + '/api/changelog/tree/1'
-// const apiUrl = 'https://vzhik.digdes.com/api/changelog/tree/1'
+// const apiUrl = 'https://doc-online-vdv.digdes.com/api/changelog/tree/1'
 
 onBeforeMount(() => {
 	fetch(apiUrl)
