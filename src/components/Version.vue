@@ -46,7 +46,7 @@
 		br
 		.sod Содержание
 		.list
-			.empt(v-for="item in myitems.versions" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.id)")
+			.empt(v-for="item in filtered" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.id)")
 				span(v-if="item.metadata.isPublic === true") {{item.fileVersion}}
 				span(v-else) Войдет в следующую версию
 		NotFound(:show="errorDialog" @close="errorDialog = false")

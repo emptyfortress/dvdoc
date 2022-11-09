@@ -7,7 +7,7 @@ import { useItems } from '@/stores/items'
 const myitems = useItems()
 
 // const host = 'https://doc-online-vdv.digdes.com'
-// const apiUrl = 'https://doc-online-vdv.digdes.com/api/changelog/tree/webclient/5.5.16'
+// const apiUrl = 'https://doc-online-vdv.digdes.com/api/changelog/tree/webclient/5.5.17'
 
 const host = window.location.protocol + '//' + window.location.hostname
 const component = document
@@ -106,15 +106,19 @@ const loading = ref(true)
 
 <template lang="pug">
 
-.empty(v-if="err") Не удалось получить данные
-.empty.green(v-if="empty") Изменений не было.
+template(v-if="err")
+	.zag Список накопительных изменений
+	.empty Не удалось получить данные
+template(v-if="empty")
+	.zag Список накопительных изменений
+	.empty.green Изменений не было.
 component(:is="Version" v-if="!loading && !empty")
 </template>
 
 <style scoped lang="scss">
 .empty {
-	margin-left: 4rem;
-	margin-right: 4rem;
+	margin-left: 2rem;
+	margin-right: 2rem;
 	margin-top: 3rem;
 	border: 1px solid pink;
 	background: $pink-1;
@@ -124,5 +128,10 @@ component(:is="Version" v-if="!loading && !empty")
 		border-color: darkgreen;
 		background: #e4e9ba;
 	}
+}
+.zag {
+	padding: 2rem 0 0;
+	font-size: 2.25rem;
+	margin-left: 2rem;
 }
 </style>
