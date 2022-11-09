@@ -1,18 +1,29 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import Version from '@/components/Version.vue'
 import { onBeforeMount } from 'vue'
 import { useItems } from '@/stores/items'
 
 const myitems = useItems()
 
+// const host = 'https://doc-online-vdv.digdes.com'
+// const apiUrl = 'https://doc-online-vdv.digdes.com/api/changelog/tree/webclient/5.5.16'
+
 const host = window.location.protocol + '//' + window.location.hostname
-const apiUrl = host + '/api/changelog/tree/1'
-// const apiUrl = 'https://doc-online-vdv.digdes.com/api/changelog/tree/1'
+const component = document
+	.querySelector('meta[name="page-component"]')
+	?.attributes.getNamedItem('content')?.textContent
+const version = document
+	.querySelector('meta[name="page-version"]')
+	?.attributes.getNamedItem('content')?.textContent
+const apiUrl = host + '/api/changelog/tree/' + component + '/' + version
 
 onBeforeMount(() => {
+	loading.value = true
 	fetch(apiUrl)
 		.then(async (response) => {
 			const data = await response.json()
+			console.log(response.status)
 
 			if (!response.ok) {
 				const error = (data && data.message) || response.statusText
@@ -75,34 +86,47 @@ onBeforeMount(() => {
 						temp.children[3].children.push(change)
 					}
 				})
-				// item.changes.forEach((change) => {
-				// 	if (change.type === 'functional') {
-				// 		temp.children[0].children.push(change)
-				// 	}
-				// 	if (change.type === 'lib') {
-				// 		temp.children[1].children.push(change)
-				// 	}
-				// 	if (change.type === 'optimization') {
-				// 		temp.children[2].children.push(change)
-				// 	}
-				// 	if (change.type === 'bugfix') {
-				// 		temp.children[3].children.push(change)
-				// 	}
-				// })
 
 				data1.push(temp)
 			})
+			if (data1.length === 0) {
+				empty.value = true
+			}
 			myitems.setVersions([...data1])
-			// items.value = data1
+			loading.value = false
 		})
 		.catch((error) => {
 			console.error('Ошибка получения данных с сервера', error)
+			err.value = true
 		})
 })
+const empty = ref(false)
+const err = ref(false)
+const loading = ref(true)
 </script>
 
 <template lang="pug">
-component(:is="Version")
+
+.empty(v-if="err") Не удалось получить данные
+div(v-if="empty")
+	.zag Изменений не было.
+component(:is="Version" v-if="!loading")
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.empty {
+	margin-left: 4rem;
+	margin-right: 4rem;
+	margin-top: 3rem;
+	border: 1px solid pink;
+	background: $pink-1;
+	font-size: 1rem;
+	padding: 1rem;
+}
+.zag {
+	padding: 2rem 0 0;
+	font-size: 1.25rem;
+	grid-column: 1/2;
+	margin-left: 4rem;
+}
+</style>
