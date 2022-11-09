@@ -23,7 +23,6 @@ onBeforeMount(() => {
 	fetch(apiUrl)
 		.then(async (response) => {
 			const data = await response.json()
-			console.log(response.status)
 
 			if (!response.ok) {
 				const error = (data && data.message) || response.statusText
@@ -108,9 +107,8 @@ const loading = ref(true)
 <template lang="pug">
 
 .empty(v-if="err") Не удалось получить данные
-div(v-if="empty")
-	.zag Изменений не было.
-component(:is="Version" v-if="!loading")
+.empty.green(v-if="empty") Изменений не было.
+component(:is="Version" v-if="!loading && !empty")
 </template>
 
 <style scoped lang="scss">
@@ -122,11 +120,9 @@ component(:is="Version" v-if="!loading")
 	background: $pink-1;
 	font-size: 1rem;
 	padding: 1rem;
-}
-.zag {
-	padding: 2rem 0 0;
-	font-size: 1.25rem;
-	grid-column: 1/2;
-	margin-left: 4rem;
+	&.green {
+		border-color: darkgreen;
+		background: #e4e9ba;
+	}
 }
 </style>
