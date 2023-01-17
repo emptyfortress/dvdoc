@@ -87,6 +87,9 @@ onBeforeMount(() => {
 				})
 
 				data1.push(temp)
+				data1[0].children.forEach((item) => {
+					item.model = true
+				})
 			})
 			if (data1.length === 0) {
 				empty.value = true
