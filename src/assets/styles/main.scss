@@ -1,3 +1,6 @@
+body {
+	font-size: inherit;
+}
 .pad {
 	padding: 2rem;
 }
@@ -40,7 +43,7 @@
 	margin-top: 3rem;
 	display: flex;
 	justify-content: space-between;
-	align-tems: center;
+	align-items: center;
 	.date {
 		font-size: 0.9rem;
 		color: grey;
