@@ -8,11 +8,12 @@
 		template(v-for="version in filtered" :key="version.id")
 			.version(:id="version.fileVersion")
 				.row.items-center
+					.q-mr-md(v-if="version.metadata.isPublic === true") Обновление
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
 						component(:is="SvgIcon" name="source-branch" color="white")
 					//- div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(version)" v-if="version.metadata.isPublic === true") {{version.fileVersion}}
 					a(:class="{link : version.metadata.isPublic}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true") {{version.fileVersion}}
-					div(v-else) Войдет в следующую версию
+					div(v-else) Войдет в следующее накопительное обновление
 
 				component(:is="Dateblock" :filter="filter" :version="version")
 
@@ -39,6 +40,8 @@
 							.more.hid(:id="setId(item.id, el.title)" v-if="el.detailed")
 								div(v-html="el.detailed")
 
+			hr( v-if="version.metadata.isPublic === false")
+
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/_/img/close-circle-outline.svg" @clear="clear")
 			template(v-slot:prepend)
@@ -48,7 +51,7 @@
 		.list
 			.empt(v-for="item in filtered" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.id)")
 				span(v-if="item.metadata.isPublic === true") {{item.fileVersion}}
-				span(v-else) Войдет в следующую версию
+				span(v-else) Войдет в следующее обновление
 		NotFound(:show="errorDialog" @close="errorDialog = false")
 </template>
 
@@ -227,5 +230,23 @@ const downloadItem = (e: Myversion) => {
 	padding: 2rem 0 0;
 	font-size: 2.25rem;
 	grid-column: 1/2;
+}
+hr {
+	border: none;
+	border-top: 3px double #333;
+	color: #333;
+	overflow: visible;
+	text-align: center;
+	height: 5px;
+	margin-top: 2rem;
+}
+
+hr:after {
+	background: #fff;
+	content: '☑';
+	padding: 0 6px;
+	position: relative;
+	top: -14px;
+	font-size: 1.3rem;
 }
 </style>

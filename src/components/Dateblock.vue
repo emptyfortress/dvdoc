@@ -2,7 +2,7 @@
 .row.items-center.q-pr-sm
 	.date.q-mr-lg
 		span(v-if="props.version.metadata.publishDate") {{props.version.metadata.publishDate.split('T')[0]}}
-		span(v-else) -- | --
+		// span(v-else) -- | --
 	q-btn(v-if="filter.length < 1" dense flat round
 		color="accent"
 		@click="handleClick($event, props.version)" )
