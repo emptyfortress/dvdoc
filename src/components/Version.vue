@@ -1,7 +1,5 @@
 <template lang="pug">
 .grid
-	.zag Список накопительных изменений
-	div
 	.left
 		template(v-if="filtered.length === 0")
 			.notfound Ничего нет. Попробуйте изменить запрос.
@@ -246,7 +244,7 @@ hr:after {
 	content: '☑';
 	padding: 0 6px;
 	position: relative;
-	top: -14px;
-	font-size: 1.3rem;
+	top: -21px;
+	font-size: 24px;
 }
 </style>
