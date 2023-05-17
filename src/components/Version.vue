@@ -114,6 +114,7 @@ const filterByLabel = (array: any, searchTerm: string) => {
 
 		return curr.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
 			curr.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			curr.fileVersion?.toLowerCase().includes(searchTerm.toLowerCase()) ||
 			children?.length > 0
 			? [...prev, { ...curr, children }]
 			: prev
