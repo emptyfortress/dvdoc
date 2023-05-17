@@ -31,6 +31,9 @@
 							.smallgrid
 								.label
 									component(:is="WordHighlighter" :query="filter") {{el.title}}
+								.sborka(v-if="!version.metadata.isPublic")
+									component(:is="WordHighlighter" :query="filter") {{el.fileVersion}}
+								div(v-else)
 								.text
 									component(:is="WordHighlighter" :query="filter") {{el.description}}
 									br
@@ -177,10 +180,11 @@ const downloadItem = (e: Myversion) => {
 .smallgrid {
 	margin-left: 4rem;
 	display: grid;
-	grid-template-columns: 260px 1fr;
-	column-gap: 1rem;
+	grid-template-columns: auto auto 1fr;
+	column-gap: 4rem;
 	font-size: 1rem;
 	line-height: 120%;
+	align-items: start;
 	// margin-bottom: 1rem;
 }
 .label {
@@ -193,6 +197,16 @@ const downloadItem = (e: Myversion) => {
 	border: 1px solid pink;
 	background: $pink-1;
 	font-size: 1rem;
+}
+.sborka {
+	font-family: Consolas, 'courier new', monospace;
+	color: crimson;
+	color: teal;
+	background-color: #f5f2f0;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	font-size: 0.8rem;
+	text-align: center;
+	padding: 0 5px;
 }
 .more {
 	font-size: 1.1rem;
