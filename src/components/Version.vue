@@ -1,7 +1,9 @@
 <template lang="pug">
 .grid
 	.left
-		template(v-if="filtered.length === 0")
+		.loading(v-if="props.loading")
+			q-spinner( color="primary" size="8em" :thickness="5")
+		template(v-if="!props.loading && filtered.length === 0")
 			.notfound Ничего нет. Попробуйте изменить запрос.
 		template(v-for="version in filtered" :key="version.id")
 			.version(:id="version.fileVersion")
@@ -10,7 +12,8 @@
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
 						component(:is="SvgIcon" name="source-branch" color="white")
 					//- div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(version)" v-if="version.metadata.isPublic === true") {{version.fileVersion}}
-					a(:class="{link : version.metadata.isPublic}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true") {{version.fileVersion}}
+					a(:class="{link : version.metadata.isPublic}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true")
+						component(:is="WordHighlighter" :query="filter") {{version.fileVersion}}
 					div(v-else) Войдет в следующее накопительное обновление
 
 				component(:is="Dateblock" :filter="filter" :version="version")
@@ -66,6 +69,13 @@ import SvgIcon from '@/components/SvgIcon.vue'
 import Dateblock from '@/components/Dateblock.vue'
 import axios from 'axios'
 import NotFound from '@/components/NotFound.vue'
+
+const props = defineProps({
+	loading: {
+		type: Boolean,
+		default: true,
+	},
+})
 
 const inView: Ref<String[]> = ref([])
 
@@ -261,5 +271,17 @@ hr:after {
 	position: relative;
 	top: -21px;
 	font-size: 24px;
+}
+.loading {
+	position: fixed;
+	height: 100vh;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 </style>

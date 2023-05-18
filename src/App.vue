@@ -1,26 +1,55 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Version from '@/components/Version.vue'
 import { onBeforeMount } from 'vue'
 import { useItems } from '@/stores/items'
 
 const myitems = useItems()
+const mylimit = ref(10)
+const myoffset = ref(0)
+const showButton = ref(false)
+
+const empty = ref(false)
+const err = ref(false)
+const loading = ref(true)
 
 // const host = 'https://doc-online-vdv.digdes.com'
-// const apiUrl = 'https://doc-online-vdv.digdes.com/api/changelog/tree/webclient/5.5.17'
+
+// const apiUrl = computed(() => {
+// 	return (
+// 		'https://doc-online-vdv.digdes.com/api/changelog/tree/webclient/5.5.17?offset=' +
+// 		myoffset.value +
+// 		'&limit=' +
+// 		mylimit.value
+// 	)
+// })
 
 const host = window.location.protocol + '//' + window.location.hostname
+
 const component = document
 	.querySelector('meta[name="page-component"]')
 	?.attributes.getNamedItem('content')?.textContent
-const version = document
-	.querySelector('meta[name="page-version"]')
-	?.attributes.getNamedItem('content')?.textContent
-const apiUrl = host + '/api/changelog/tree/' + component + '/' + version
 
-onBeforeMount(() => {
+const version = document.querySelector('meta[name="page-version"]')
+const apiUrl = computed(() => {
+	return (
+		host +
+		'/api/changelog/tree/' +
+		component +
+		'/' +
+		version?.attributes.getNamedItem('content')?.textContent +
+		'?offset=' +
+		myoffset.value +
+		'&limit=' +
+		mylimit.value
+	)
+})
+
+let data1 = [] as Myversion[]
+
+const getData = () => {
 	loading.value = true
-	fetch(apiUrl)
+	fetch(apiUrl.value)
 		.then(async (response) => {
 			const data = await response.json()
 
@@ -28,8 +57,6 @@ onBeforeMount(() => {
 				const error = (data && data.message) || response.statusText
 				return Promise.reject(error)
 			}
-
-			let data1 = [] as Myversion[]
 
 			data.forEach((item: Version) => {
 				let temp = {} as Myversion
@@ -96,15 +123,24 @@ onBeforeMount(() => {
 			}
 			myitems.setVersions([...data1])
 			loading.value = false
+			showButton.value = true
+
+			if (data.length === 0) {
+				showButton.value = false
+			}
 		})
 		.catch((error) => {
 			console.error('Ошибка получения данных с сервера', error)
 			err.value = true
 		})
-})
-const empty = ref(false)
-const err = ref(false)
-const loading = ref(true)
+}
+
+onBeforeMount(() => getData())
+
+const more = () => {
+	myoffset.value += 10
+	getData()
+}
 </script>
 
 <template lang="pug">
@@ -115,10 +151,24 @@ template(v-if="err")
 template(v-if="empty")
 	.zag Список накопительных изменений
 	.empty.green Изменений не было.
-component(:is="Version" v-if="!loading && !empty")
+template(v-if="!empty")
+	component(:is="Version" :loading="loading")
+	q-btn(v-if="showButton" label="Загрузить ещё" color="accent" @click="more").more
 </template>
 
 <style scoped lang="scss">
+.loading {
+	position: fixed;
+	height: 100vh;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .empty {
 	margin-left: 2rem;
 	margin-right: 2rem;
@@ -136,5 +186,9 @@ component(:is="Version" v-if="!loading && !empty")
 	padding: 2rem 0 0;
 	font-size: 2.25rem;
 	margin-left: 2rem;
+}
+.more {
+	margin-left: 2rem;
+	margin-bottom: 1rem;
 }
 </style>

@@ -12,6 +12,8 @@ body {
 	position: fixed;
 	top: 159px;
 	right: 10px;
+	height: calc(100vh - 180px);
+	overflow: auto;
 	min-width: 300px;
 	padding: 1rem;
 	border-left: 1px solid #ccc;
