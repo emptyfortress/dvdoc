@@ -9,10 +9,9 @@
 			.version(:id="version.fileVersion")
 				.row.items-center
 					.q-mr-md(v-if="version.metadata.isPublic === true") Обновление
-					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md
+					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md.nocursor
 						component(:is="SvgIcon" name="source-branch" color="white")
-					//- div(:class="{link : version.metadata.isPublic}"  @click.prevent="downloadItem(version)" v-if="version.metadata.isPublic === true") {{version.fileVersion}}
-					a(:class="{link : version.metadata.isPublic}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true")
+					a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true")
 						component(:is="WordHighlighter" :query="filter") {{version.fileVersion}}
 					div(v-else) Войдет в следующее накопительное обновление
 
@@ -141,7 +140,8 @@ const filtered = computed(() => {
 watchEffect(() => {
 	if (filter.value.length > 1) {
 		myitems.expandAll()
-	}
+		myitems.filterActive = true
+	} else myitems.filterActive = false
 })
 
 const setId = (id: number, label: string) => {
@@ -162,29 +162,35 @@ const showIcon = (icon: string) => {
 }
 const errorDialog = ref(false)
 
-const downloadItem = (e: Myversion) => {
-	const url = e.metadata.downloadLink
-	axios({
-		// url: 'http://localhost:3000/img/alert1.svg',
-		url: url,
-		method: 'GET',
-		responseType: 'blob',
-	})
-		.then((response: any) => {
-			var fileURL = window.URL.createObjectURL(new Blob([response.data]))
-			var fileLink = document.createElement('a')
-
-			fileLink.href = fileURL
-			fileLink.setAttribute('download', 'file.svg')
-			document.body.appendChild(fileLink)
-
-			fileLink.click()
-		})
-		.catch(() => {
-			console.log('File not found')
-			errorDialog.value = true
-		})
+const calcLink = (e: Version) => {
+	if (e.metadata.downloadLink === null) {
+		return ''
+	} else return 'link'
 }
+
+// const downloadItem = (e: Myversion) => {
+// 	const url = e.metadata.downloadLink
+// 	axios({
+// 		// url: 'http://localhost:3000/img/alert1.svg',
+// 		url: url,
+// 		method: 'GET',
+// 		responseType: 'blob',
+// 	})
+// 		.then((response: any) => {
+// 			var fileURL = window.URL.createObjectURL(new Blob([response.data]))
+// 			var fileLink = document.createElement('a')
+//
+// 			fileLink.href = fileURL
+// 			fileLink.setAttribute('download', 'file.svg')
+// 			document.body.appendChild(fileLink)
+//
+// 			fileLink.click()
+// 		})
+// 		.catch(() => {
+// 			console.log('File not found')
+// 			errorDialog.value = true
+// 		})
+// }
 </script>
 
 <style scoped lang="scss">
@@ -232,9 +238,13 @@ const downloadItem = (e: Myversion) => {
 .visib {
 	border-left: 3px solid $accent;
 }
+.nocursor {
+	cursor: default;
+}
 .link {
 	cursor: pointer;
 	color: $accent;
+	text-decoration: none;
 	&:hover {
 		text-decoration: underline;
 	}

@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import Version from '@/components/Version.vue'
 import { onBeforeMount } from 'vue'
 import { useItems } from '@/stores/items'
+// import { dumb } from '@/stores/dumb'
 
 const myitems = useItems()
 const mylimit = ref(10)
@@ -14,10 +15,11 @@ const err = ref(false)
 const loading = ref(true)
 
 // const host = 'https://doc-online-vdv.digdes.com'
+// const host = 'https://help.docsvision.com'
 
 // const apiUrl = computed(() => {
 // 	return (
-// 		'https://doc-online-vdv.digdes.com/api/changelog/tree/webclient/5.5.17?offset=' +
+// 		'https://help.docsvision.com/api/changelog/tree/webclient/5.5.17?offset=' +
 // 		myoffset.value +
 // 		'&limit=' +
 // 		mylimit.value
@@ -31,6 +33,7 @@ const component = document
 	?.attributes.getNamedItem('content')?.textContent
 
 const version = document.querySelector('meta[name="page-version"]')
+
 const apiUrl = computed(() => {
 	return (
 		host +
@@ -121,6 +124,7 @@ const getData = () => {
 			if (data1.length === 0) {
 				empty.value = true
 			}
+			console.log(data1)
 			myitems.setVersions([...data1])
 			loading.value = false
 			showButton.value = true
@@ -136,6 +140,12 @@ const getData = () => {
 }
 
 onBeforeMount(() => getData())
+// onBeforeMount(() => {
+// 	myitems.setVersions([...dumb])
+// 	loading.value = false
+// 	showButton.value = true
+// 	console.log(dumb)
+// })
 
 const more = () => {
 	myoffset.value += 10
@@ -151,9 +161,9 @@ template(v-if="err")
 template(v-if="empty")
 	.zag Список накопительных изменений
 	.empty.green Изменений не было.
-template(v-if="!empty")
+template(v-if="!empty && !err")
 	component(:is="Version" :loading="loading")
-	q-btn(v-if="showButton" label="Загрузить ещё" color="accent" @click="more").more
+	q-btn(v-if="showButton && !myitems.filterActive" label="Загрузить ещё" color="accent" @click="more").more
 </template>
 
 <style scoped lang="scss">

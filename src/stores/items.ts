@@ -4,6 +4,7 @@ export const useItems = defineStore({
 	id: 'items',
 	state: () => ({
 		versions: [] as Myversion[],
+		filterActive: false,
 	}),
 	getters: {},
 	actions: {
