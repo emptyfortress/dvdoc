@@ -14,7 +14,6 @@ const empty = ref(false)
 const err = ref(false)
 const loading = ref(true)
 
-// const host = 'https://doc-online-vdv.digdes.com'
 // const host = 'https://help.docsvision.com'
 
 // const apiUrl = computed(() => {
@@ -124,12 +123,12 @@ const getData = () => {
 			if (data1.length === 0) {
 				empty.value = true
 			}
-			console.log(data1)
+			// console.log(data1)
 			myitems.setVersions([...data1])
 			loading.value = false
 			showButton.value = true
 
-			if (data.length === 0) {
+			if (data.length < mylimit.value) {
 				showButton.value = false
 			}
 		})

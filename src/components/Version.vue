@@ -11,7 +11,7 @@
 					.q-mr-md(v-if="version.metadata.isPublic === true") Обновление
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md.nocursor
 						component(:is="SvgIcon" name="source-branch" color="white")
-					a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true")
+					a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true").lin
 						component(:is="WordHighlighter" :query="filter") {{version.fileVersion}}
 					div(v-else) Войдет в следующее накопительное обновление
 
@@ -167,33 +167,12 @@ const calcLink = (e: Version) => {
 		return ''
 	} else return 'link'
 }
-
-// const downloadItem = (e: Myversion) => {
-// 	const url = e.metadata.downloadLink
-// 	axios({
-// 		// url: 'http://localhost:3000/img/alert1.svg',
-// 		url: url,
-// 		method: 'GET',
-// 		responseType: 'blob',
-// 	})
-// 		.then((response: any) => {
-// 			var fileURL = window.URL.createObjectURL(new Blob([response.data]))
-// 			var fileLink = document.createElement('a')
-//
-// 			fileLink.href = fileURL
-// 			fileLink.setAttribute('download', 'file.svg')
-// 			document.body.appendChild(fileLink)
-//
-// 			fileLink.click()
-// 		})
-// 		.catch(() => {
-// 			console.log('File not found')
-// 			errorDialog.value = true
-// 		})
-// }
 </script>
 
 <style scoped lang="scss">
+a:hover {
+	text-decoration: none;
+}
 .smallgrid {
 	margin-left: 4rem;
 	display: grid;
@@ -217,6 +196,7 @@ const calcLink = (e: Version) => {
 }
 .sborka {
 	font-family: Consolas, 'courier new', monospace;
+	font-weight: 600;
 	color: crimson;
 	color: teal;
 	background-color: #f5f2f0;
