@@ -176,8 +176,8 @@ a:hover {
 .smallgrid {
 	margin-left: 4rem;
 	display: grid;
-	grid-template-columns: auto auto 1fr;
-	column-gap: 4rem;
+	grid-template-columns: 96px auto 1fr;
+	column-gap: 3.2rem;
 	font-size: 1rem;
 	line-height: 120%;
 	align-items: start;
