@@ -6,7 +6,7 @@
 		template(v-if="!props.loading && filtered.length === 0")
 			.notfound Ничего нет. Попробуйте изменить запрос.
 		template(v-for="version in filtered" :key="version.id")
-			.version(:id="version.fileVersion")
+			.vers(:id="version.fileVersion")
 				.row.items-center
 					.q-mr-md(v-if="version.metadata.isPublic === true") Обновление
 					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md.nocursor
@@ -173,6 +173,7 @@ const calcLink = (e: Version) => {
 a:hover {
 	text-decoration: none;
 }
+
 .smallgrid {
 	margin-left: 4rem;
 	display: grid;
@@ -183,10 +184,12 @@ a:hover {
 	align-items: start;
 	// margin-bottom: 1rem;
 }
+
 .label {
 	font-weight: 500;
 	font-style: italic;
 }
+
 .notfound {
 	margin-top: 3rem;
 	padding: 1rem;
@@ -194,6 +197,7 @@ a:hover {
 	background: $pink-1;
 	font-size: 1rem;
 }
+
 .sborka {
 	font-family: Consolas, 'courier new', monospace;
 	font-weight: 600;
@@ -205,30 +209,38 @@ a:hover {
 	text-align: center;
 	padding: 0 5px;
 }
+
 .more {
 	font-size: 1.1rem;
 	margin-left: 4rem;
+
 	&.hid {
 		display: none;
 	}
 }
+
 .empt {
 	border-left: 3px solid transparent;
 }
+
 .visib {
 	border-left: 3px solid $accent;
 }
+
 .nocursor {
 	cursor: default;
 }
+
 .link {
 	cursor: pointer;
 	color: $accent;
 	text-decoration: none;
+
 	&:hover {
 		text-decoration: underline;
 	}
 }
+
 .myrow {
 	width: 100%;
 	display: flex;
@@ -236,14 +248,17 @@ a:hover {
 	align-items: center;
 	background: #eee;
 }
+
 .magnify {
 	width: 22px;
 }
+
 .zag {
 	padding: 2rem 0 0;
 	font-size: 2.25rem;
 	grid-column: 1/2;
 }
+
 hr {
 	border: none;
 	border-top: 3px double #333;
@@ -262,6 +277,7 @@ hr:after {
 	top: -21px;
 	font-size: 24px;
 }
+
 .loading {
 	position: fixed;
 	height: 100vh;
@@ -273,5 +289,4 @@ hr:after {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-</style>
+}</style>
