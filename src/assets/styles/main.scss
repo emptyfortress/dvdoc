@@ -8,30 +8,7 @@ body {
 .rel {
 	position: relative;
 }
-.side {
-	position: fixed;
-	top: 159px;
-	right: 10px;
-	height: 300px;
-	height: calc(100vh - 350px);
-	overflow: auto;
-	min-width: 300px;
-	padding: 1rem;
-	border-left: 1px solid #ccc;
-	.sod {
-		font-weight: bold;
-		margin-bottom: 1rem;
-	}
-	.list div {
-		margin-bottom: 0.5rem;
-		cursor: pointer;
-		padding-left: 1rem;
-		transform: translateX(-1rem);
-		&:hover {
-			color: $accent;
-		}
-	}
-}
+
 .grid {
 	min-height: 340px;
 	padding: 2rem;
@@ -39,6 +16,42 @@ body {
 	display: grid;
 	grid-template-columns: 1fr 300px;
 	gap: 1rem;
+}
+.side {
+	grid-row: 1/3;
+	grid-column: 1/-1;
+}
+.left {
+	grid-column: 1/-1;
+}
+@media screen and (min-width: 1200px) {
+	.side {
+		position: fixed;
+		top: 159px;
+		right: 10px;
+		height: 300px;
+		height: calc(100vh - 350px);
+		overflow: auto;
+		min-width: 300px;
+		padding: 1rem;
+		border-left: 1px solid #ccc;
+		.sod {
+			font-weight: bold;
+			margin-bottom: 1rem;
+		}
+		.list div {
+			margin-bottom: 0.5rem;
+			cursor: pointer;
+			padding-left: 1rem;
+			transform: translateX(-1rem);
+			&:hover {
+				color: $accent;
+			}
+		}
+	}
+	.left {
+		grid-column: 1/2;
+	}
 }
 
 .vers {

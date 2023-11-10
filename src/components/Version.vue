@@ -184,6 +184,11 @@ a:hover {
 	align-items: start;
 	// margin-bottom: 1rem;
 }
+@media screen and (max-width: 760px) {
+	.smallgrid {
+		grid-template-columns: 1fr;
+	}
+}
 
 .label {
 	font-weight: 500;
@@ -289,4 +294,5 @@ hr:after {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}</style>
+}
+</style>
