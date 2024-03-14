@@ -14,25 +14,22 @@ const empty = ref(false)
 const err = ref(false)
 const loading = ref(true)
 
-// const host = 'https://help.docsvision.com'
+// this block for local testing *************************
 
+// const host = 'https://help.docsvision.com'
 // const apiUrl = computed(() => {
 // 	return (
-// 		'https://help.docsvision.com/api/changelog/tree/webclient/5.5.17?offset=' +
+// 		// 'https://help.docsvision.com/api/changelog/tree/webclient/5.5.17?offset=' +
+// 		'https://help.docsvision.com/api/changelog/tree/documentmgmt/5.5.4?offset=' +
 // 		myoffset.value +
 // 		'&limit=' +
 // 		mylimit.value
 // 	)
 // })
 
+// end local testing *************************************
+
 const host = window.location.protocol + '//' + window.location.hostname
-
-const component = document
-	.querySelector('meta[name="page-component"]')
-	?.attributes.getNamedItem('content')?.textContent
-
-const version = document.querySelector('meta[name="page-version"]')
-
 const apiUrl = computed(() => {
 	return (
 		host +
@@ -46,6 +43,12 @@ const apiUrl = computed(() => {
 		mylimit.value
 	)
 })
+
+const component = document
+	.querySelector('meta[name="page-component"]')
+	?.attributes.getNamedItem('content')?.textContent
+
+const version = document.querySelector('meta[name="page-version"]')
 
 let data1 = [] as Myversion[]
 
@@ -99,6 +102,14 @@ const getData = () => {
 						type: 1,
 						children: [] as Err[],
 					},
+					{
+						id: 4,
+						head: 'Изменения в API',
+						icon: 'api',
+						model: false,
+						type: 5,
+						children: [],
+					},
 				]
 				item.changes.forEach((change) => {
 					if (change.type == 3) {
@@ -112,6 +123,9 @@ const getData = () => {
 					}
 					if (change.type == 1) {
 						temp.children[3].children.push(change)
+					}
+					if (change.type == 5) {
+						temp.children[4].children.push(change)
 					}
 				})
 
